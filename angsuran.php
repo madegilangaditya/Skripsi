@@ -128,7 +128,12 @@ include "head.php";
 		</div>
 
 		<div class="single-bottom2">
+
 			<h6 style="font-weight: 600";>Harga Angsuran (Bulan)</h6>
+			<select name="bjns" id="bjns" class="form-control" style="margin-top: 2em; width: 25%;">
+				<option value=1>Bunga Tetap</option>
+				<option value=2>Bunga Menurun</option>
+			</select>
 			<div class="product" style="margin-bottom: 20px;" id="hsl">			  
 			
 			</div>	
@@ -145,9 +150,9 @@ include "footer.php";
 <!---->
 
 <script src="lightbox2-master/dist/js/lightbox-plus-jquery.min.js"></script>
-<script type="text/javascript">
 
-        
+
+<script type="text/javascript">
 var htmlobjek;
         $(document).ready(function(){
           //apabila terjadi event onchange terhadap object <select id=provinsi>
@@ -202,6 +207,35 @@ var htmlobjek;
         });
 </script>
 
+<script type="text/javascript">
+
+        
+var htmlobjek;
+        $(document).ready(function(){
+          //apabila terjadi event onchange terhadap object <select id=provinsi>
+          $("#bjns").change(function(){
+            var bjns = $("#bjns").val();
+            var umuka = $("#umuka").val();
+            //var session_value = '<%=Session["warna"]%>';
+
+            $.ajax({
+                url: "ambil-uang-muka.php",
+                data: "bjns="+bjns+"&umuka="+umuka,
+                cache: false,
+                success: function(msg){
+                    //jika data sukses diambil dari server kita tampilkan
+                    //di <select id=kota>
+                    // <%Session["warna"] = warna ;%>
+                    
+                    //document.getElementById("gmb2").src=msg;
+                    //$("#gmb1").html(msg);
+                    $("#hsl").html(msg);
+                  
+                }
+            });
+          });
+        });
+</script>
 </body>
 </html>
 

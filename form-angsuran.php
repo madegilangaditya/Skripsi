@@ -11,12 +11,14 @@
 		//$namaf = $bar['nama_finance'];
 		$idb=$bar['id_bunga'];
 		$btn='btn'.$idb;
+		//$bnt='btnbn'.$idb;
 		
 		if(isset($_POST[$btn])){
 			$ang = $_POST[$idb];
+			$idj=1;
 			$_SESSION['ang']=$ang;
 			$_SESSION['idb']=$idb;
-			echo "tes $_SESSION[hrg], $_SESSION[idb], $_SESSION[ang], $_SESSION[umuka], ";
+			
 				/*$sql1=mysql_query("select * from tb_cart where id_login=$idl AND id_harga=$idh AND id_warna=$idw");
 				$bar1=mysql_fetch_array($sql1);
 				if(!empty ($bar1)){
@@ -34,9 +36,17 @@
 					") or die(mysql_error());
 				}*/
 				
-			}
+		}/*else if(isset($_POST[$bnt])){
+			$ang = $_POST[$idb];
+			$idj=1;
+			$_SESSION['ang']=$ang;
+			$_SESSION['idb']=$idb;
+		}*/
+
 	}
 	//$ang = $_POST['angsuran'];
 	//echo "$id $ang";
+	echo "tes $_SESSION[hrg], $_SESSION[idb], $_SESSION[ang], $_SESSION[umuka], $idj, ";
 	echo $_SESSION['warna'];
+
 ?>
