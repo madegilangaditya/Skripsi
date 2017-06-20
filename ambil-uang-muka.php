@@ -74,7 +74,7 @@
 							echo "<td>Rp $angtp  
 							<input name='$id_bunga_sel3_arr[$counter]' type='hidden' value='$angtp'>
 							<input name='jns' type='hidden' value=1>
-							<button type='submit'class='btn btn-success' name='btnbt$id_bunga_sel3_arr[$counter]' value='$id_bunga_sel3_arr[$counter]' style='float:right;'>Buy</button>
+							<button type='submit'class='btn btn-success' name='btn$id_bunga_sel3_arr[$counter]' value='$id_bunga_sel3_arr[$counter]' style='float:right;'>Buy</button>
 							</td>";
 							$counter++;
 						}  else{
@@ -107,7 +107,7 @@
 							echo "<td>Rp $angtp  
 							<input name='$br[id_bunga]' type='hidden' value='$angtp'>
 							<input name='jns' type='hidden' value=1>
-							<button type='submit'class='btn btn-success' name='btnbt$br[id_bunga]' value='$br[id_bunga]' style='float:right;'>Buy</button>
+							<button type='submit'class='btn btn-success' name='btn$br[id_bunga]' value='$br[id_bunga]' style='float:right;'>Buy</button>
 							</td>";
 						
 					}
@@ -183,7 +183,7 @@
 							echo "<td>Rp $angtp  
 							<input name='$id_bunga_sel3_arr[$counter]' type='hidden' value='$angtp'>
 							<input name='jns' type='hidden' value=1>
-							<button type='submit'class='btn btn-success' name='btnbt$id_bunga_sel3_arr[$counter]' value='$id_bunga_sel3_arr[$counter]' style='float:right;'>Buy</button>
+							<button type='submit'class='btn btn-success' name='btn$id_bunga_sel3_arr[$counter]' value='$id_bunga_sel3_arr[$counter]' style='float:right;'>Buy</button>
 							</td>";
 							$counter++;
 						}  else{
@@ -216,7 +216,7 @@
 							echo "<td>Rp $angtp  
 							<input name='$br[id_bunga]' type='hidden' value='$angtp'>
 							<input name='jns' type='hidden' value=1>
-							<button type='submit'class='btn btn-success' name='btnbt$br[id_bunga]' value='$br[id_bunga]' style='float:right;'>Buy</button>
+							<button type='submit'class='btn btn-success' name='btn$br[id_bunga]' value='$br[id_bunga]' style='float:right;'>Buy</button>
 							</td>";
 						
 					}
@@ -292,7 +292,7 @@
 							echo "<td>Rp $angrn  
 							<input name='$id_bunga_sel3_arr[$counter]' type='hidden' value='$angtp'>
 							<input name='jns' type='hidden' value=2>
-							<button type='submit'class='btn btn-success' name='btnbt$id_bunga_sel3_arr[$counter]' value='$id_bunga_sel3_arr[$counter]' style='float:right;'>Buy</button>
+							<button type='submit'class='btn btn-success' name='btn$id_bunga_sel3_arr[$counter]' value='$id_bunga_sel3_arr[$counter]' style='float:right;'>Buy</button>
 							</td>";
 							$counter++;
 						}  else{
@@ -324,7 +324,7 @@
 							echo "<td>Rp $angrn  
 							<input name='$br[id_bunga]' type='hidden' value='$angtp'>
 							<input name='jns' type='hidden' value=2>
-							<button type='submit'class='btn btn-success' name='btnbt$br[id_bunga]' value='$br[id_bunga]' style='float:right;'>Buy</button>
+							<button type='submit'class='btn btn-success' name='btn$br[id_bunga]' value='$br[id_bunga]' style='float:right;'>Buy</button>
 							</td>";
 						
 					}
