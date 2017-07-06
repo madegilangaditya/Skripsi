@@ -178,16 +178,19 @@
 	<?php
 		include "footer.php";
 	?>
-<div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-             <div class="modal-dialog"> 
-                  <div class="modal-content"> 
-                      
-                       <div class="modal-header" id="dynamic-content"> 
-                            
-                        
-                 </div> 
-              </div>
-       </div><!-- /.modal -->
+		<!-- /.modal -->
+		<div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		    <div class="modal-dialog"> 
+		        <div class="modal-content"> 
+		                  
+		            <div class="modal-header" id="dynamic-content"> 
+		                        
+		                    
+		            </div> 
+		        </div>
+		   </div>
+		</div>
+		<!-- /.modal -->
 	</body>
 </html>
 

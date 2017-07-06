@@ -28,6 +28,9 @@
 			}
 			elseif ($result2['otoritas']=="4") {
 			include "nav-finance.php";
+			}
+			elseif ($result2['otoritas']=="5") {
+			include "nav-surveyor.php";
 			}else{
 				header('location:login.php');
 			}
@@ -48,6 +51,8 @@
 				include"dealer.php";
 			}else if ($result2['otoritas']=="4"){
 				include "finance.php";
+			}else if ($result2['otoritas']=="5"){
+				include "surveyor.php";
 			}
 
 		?>	

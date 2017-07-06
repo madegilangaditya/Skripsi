@@ -259,53 +259,7 @@
 	</div>
 
 		<!--//content-->
-	<!--Modal-->
-		<div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-		    <div class="modal-dialog" style="width: 80%;"> 
-		        <div class="modal-content"> 
-		                  
-		            <div class="modal-header" id="dynamic-content"> 
-		                        
-		                    
-		            </div> 
-		        </div>
-		   	</div>
-		</div>
-		<!--Modal-->
-<script>
-	$(document).ready(function(){
-		
-		$(document).on('click', '#getUser', function(e){
-			
-			e.preventDefault();
-			
-			var uid = $(this).data('id');   // it will get id of clicked row
-			
-			$('#dynamic-content').html(''); // leave it blank before ajax call
-			$('#modal-loader').show();      // load ajax loader
-			
-			$.ajax({
-				url: '../get-trans.php',
-				type: 'POST',
-				data: 'id='+uid,
-				dataType: 'html'
-			})
-			.done(function(data){
-				console.log(data);	
-				$('#dynamic-content').html('');    
-				$('#dynamic-content').html(data); // load response 
-				$('#modal-loader').hide();		  // hide ajax loader	
-			})
-			.fail(function(){
-				$('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
-				$('#modal-loader').hide();
-			});
-			
-		});
-		
-	});
-
-</script>
+	
 
 <script type="text/javascript">
 	$(document).ready(function() {

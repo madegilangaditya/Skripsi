@@ -8,18 +8,18 @@ $idf = $_POST['id'];
 $butap = $_POST['butap'];
 $burun = $_POST['burun'];
 $biaya = $_POST['biaya'];
-$bulan = $_POST['bulan'];
-for ($i=0; $i < count($bulan) ; $i++) { 
-	$sel = mysql_query("select id_bunga, jangka_waktu from tb_bunga where id_finance='$idf' and jangka_waktu='$bulan[$i]'");
+//$bulan = $_POST['bulan'];
+/*for ($i=0; $i < count($bulan) ; $i++) { 
+	
+}*/
+	$sel = mysql_query("select id_bunga, jangka_waktu from tb_bunga where id_finance='$idf'");
 	$br = mysql_fetch_array($sel);
 	$idb = $br['id_bunga'];
 	if (mysql_num_rows($sel)==0) {
-		$hasil = mysql_query("insert into tb_bunga (id_finance, bunga_tetap, bunga_menurun, biaya_tambahan, jangka_waktu) values ('$idf','$butap','$burun', '$biaya', '$bulan[$i]')");
+		$hasil = mysql_query("insert into tb_bunga (id_finance, bunga_tetap, bunga_menurun, biaya_tambahan) values ('$idf','$butap','$burun', '$biaya')");
 	}else{
-		$delete = mysql_query("delete from tb_bunga where id_bunga='$idb'");
-		$hasil = mysql_query("insert into tb_bunga (id_finance, bunga_tetap, bunga_menurun, biaya_tambahan, jangka_waktu) values ('$idf','$butap','$burun', '$biaya', '$bulan[$i]')");
+		$hasil = mysql_query("update tb_bunga set id_finance='$idf', bunga_tetap='$butap', bunga_menurun='$burun', biaya_tambahan='$biaya' where id_bunga='$idb'");
 	}
 	
 	header('location: admin.php?page=suku-bunga');
-}
 ?>

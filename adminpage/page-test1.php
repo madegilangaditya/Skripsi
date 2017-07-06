@@ -16,7 +16,7 @@ if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SER
 	
 	$page_position = (($page_number-1) * $item_per_page);
 	//echo "tes $get_total_rows, $total_pages, $page_position";
-
+	echo "tes $_SESSION[user]";
 ?>
 	<div class='table'>
 		<h2 align='center'>Penjualan Belum Dikonfirmasi <br><br></h2>
@@ -24,34 +24,34 @@ if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SER
 			<thead>
 				<tr>
 					<th>No</th>
-					<!--th>Gambar</th-->
-					<th>Detail Transaksi</th>
-					<th>Total Harga</th>
-					<th>Status</th>
+					<th>Detail Kredit</th>
+					<th>Nama Pelanggan</th>
+					<th>Alamat</th>
+					<!--th>Tanggal Pengajuan</th-->
 					<th>Action</th>
 				</tr>
 			</thead>
 			
 			<?php 
-				$result = mysql_query("SELECT * FROM tb_transaksi where status=2 ORDER BY id_transaksi DESC LIMIT $page_position, $item_per_page");
+				$result = mysql_query("SELECT tb_pelanggan.nama_pelanggan, tb_pelanggan.alamat, tb_kredit.tgl_pengajuan, tb_kredit.id_kredit FROM tb_kredit INNER JOIN tb_pelanggan ON tb_pelanggan.`id_pelanggan`=tb_kredit.id_pelanggan  WHERE tb_kredit.status=1 AND tb_kredit.id_surveyor=$_SESSION[surveyor] ORDER BY tb_kredit.tgl_pengajuan DESC LIMIT $page_position, $item_per_page");
 				$no = 1+$page_position;
 				while($bar=mysql_fetch_array($result)) { 
-					$tgl = date("d F Y H:i:s", strtotime($bar['tgl_transaksi']));
-					$hrg=number_format($bar['jumlah_harga'], 0, ".", ".");
+					$tgl = date("d F Y H:i:s", strtotime($bar['tgl_pengajuan']));
+					//$hrg=number_format($bar['jumlah_harga'], 0, ".", ".");
 			?>
 			<tbody>
 				<tr>
 					<td align='center'><?php echo $no; ?></td>
 					<td>
-						<div>No.Transaksi:
-							<a href='#' data-toggle='modal' data-target='#view-modal' data-id='<?php echo $bar[id_transaksi]; ?>' id='getUser'  style='color: #b30143;'><?php echo $bar[id_transaksi]; ?></a>
+						<div>No.Kredit:
+							<a href='#' data-toggle='modal' data-target='#view-modal' data-id='<?php echo $bar[id_kredit]; ?>' id='getUser'  style='color: #b30143;'><?php echo $bar[id_kredit]; ?></a>
 						</div><?php echo $tgl; ?>
 					</td>
-					<td><?php echo $hrg; ?></td>
-					<td>Menunggu Pembayaran</td>
+					<td><?php echo $bar[nama_pelanggan]; ?></td>
+					<td><?php echo $bar[alamat]; ?></td>
 					<td>
-						<a class='btn btn-success' href='konfirmasi-trans.php?id=<?php echo $bar[id_transaksi]; ?>'>Konfirmasi</a>
-						<a class='btn btn-info' href='proses-delete-harga.php?id=<?php echo $bar[id_transaksi]; ?>' >View</a>
+						<a class='btn btn-success' href='konfirmasi-trans.php?id=<?php echo $bar[id_kredit]; ?>'>Konfirmasi</a>
+						<a class='btn btn-info' href='proses-delete-harga.php?id=<?php echo $bar[id_kredit]; ?>' >View</a>
 					</td>
 				</tr>
 			</tbody>

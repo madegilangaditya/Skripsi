@@ -12,15 +12,15 @@
 	$_SESSION['warna']=$idw;
 	$umuka = $_POST['umuka'];
 	$_SESSION['umuka']=$umuka;
-	$sel = mysql_query("SELECT tb_bunga.id_bunga FROM tb_bunga");
+	$sel = mysql_query("SELECT tb_jawu.id_jawu FROM tb_jawu");
 	while ($bar=mysql_fetch_array($sel)){
 		//$namaf = $bar['nama_finance'];
-		$idb=$bar['id_bunga'];
+		$idb=$bar['id_jawu'];
 		$btn='btn'.$idb;
 		//$bnt='btnbn'.$idb;
 		
 		if(isset($_POST[$btn])){
-			$sel5 = mysql_query("SELECT tb_bunga.biaya_tambahan, tb_bunga.bunga_tetap, tb_bunga.bunga_menurun FROM tb_bunga");
+			$sel5 = mysql_query("SELECT tb_bunga.biaya_tambahan, tb_bunga.bunga_tetap, tb_bunga.bunga_menurun, tb_jawu.id_bunga FROM tb_jawu inner join tb_bunga on tb_bunga.id_bunga=tb_jawu.id_bunga where id_jawu='$idb'");
 			$c=mysql_fetch_assoc($sel5);
 			$bia = $c['biaya_tambahan'];
 			$butap = $c['bunga_tetap'];
@@ -35,8 +35,8 @@
 	}
 	//$ang = $_POST['angsuran'];
 	//echo "$id $ang";
-	echo "tes $_SESSION[hrg], $_SESSION[idb], $ang, $_SESSION[umuka],$umuka, $idj, $bjns , ";
-	echo $_SESSION['warna'];
+	//echo "tes $_SESSION[hrg], $_SESSION[idb], $ang, $_SESSION[umuka],$umuka, $idj, $bjns , ";
+	//echo $_SESSION['warna'];
 
 ?>
 <style type="text/css">
@@ -102,8 +102,8 @@
 					$y=idate("y");
 					$t=$d+$m+$y+$z;
 					$tot = $hrg - $umuka + $bia;
-					$_SESSION['harga']=$tot;
-					$fe = mysql_query("select tb_bunga.id_finance, tb_bunga.jangka_waktu, tb_finance.nama_finance from tb_bunga inner join tb_finance on tb_finance.id_finance=tb_bunga.id_finance where id_bunga = '$_SESSION[idb]'");
+					$_SESSION['angtot']=$tot;
+					$fe = mysql_query("SELECT tb_bunga.id_finance, tb_jawu.jangka_waktu, tb_finance.nama_finance FROM tb_jawu INNER JOIN tb_bunga ON tb_bunga.id_bunga=tb_jawu.id_bunga INNER JOIN tb_finance ON tb_finance.id_finance=tb_bunga.id_finance WHERE id_jawu = '$_SESSION[idb]'");
 					$b=mysql_fetch_assoc($fe);
 					$idf = $b['id_finance'];
 					$namaf = $b['nama_finance'];
@@ -113,6 +113,7 @@
 				<form method="post" action="proses-kredit.php" enctype="multipart/form-data">
 					<div class="col-md-12 cart-items" id="col12">	
 						<div class="col-md-6 cart-items">
+							<input id="jns" class="form-control" type="hidden" name="jns" value="<?php echo "".$bjns;?>">
 							<div class="form-group">
 								<label class="control-label">Nama Lengkap:</label>
 			                    <input id="nama" class="form-control" type="text" placeholder="Nama Lengkap" name="nama" value="<?php echo "".$nama;?>">
@@ -186,7 +187,7 @@
 		                <div class="col-md-6 cart-items">
 		                	<div class="form-group">
 								<label class="control-label">Penghasilan Per Bulan:</label>
-			                    <input id="nama" class="form-control" type="Number" placeholder="Penghasilan Per Bulan" name="gajip">
+			                    <input id="gajip" class="form-control" type="Number" placeholder="Penghasilan Per Bulan" name="gajip">
 			                </div>
 			                <div class="form-group">
 								<label class="control-label">Scan Slip Gaji/Ket.Penghasilan/FC Tabungan:</label>
@@ -195,20 +196,20 @@
 			                </div>
 			                <div class="form-group">
 								<label class="control-label">Biaya Listrik Per Bulan:</label>
-			                    <input id="nama" class="form-control" type="Number" placeholder="Biaya Listrik Per Bulan" name="plnp">
+			                    <input id="plnp" class="form-control" type="Number" placeholder="Biaya Listrik Per Bulan" name="plnp">
 			                </div>
 			                <div class="form-group">
 								<label class="control-label">Scan Rek. PLN Bulan Terakhir:</label>
-			                    <input id="kk" type="file"  name="PLN" >
+			                    <input id="pln" type="file"  name="pln" >
 			                    <p class="help-block">Rek. PLN</p>
 			                </div>
 		                </div>
 		                <div class="col-md-6 cart-items">
 		                	<div class="form-group">
 								<label class="control-label">FC KTP Suami dan Istri:</label>
-			                    <input id="ktp"  type="file"  name="suami" >
+			                    <input id="suami"  type="file"  name="suami" >
 			                    <p class="help-block">KTP Suami</p>
-			                    <input id="ktp"  type="file"  name="Istri" >
+			                    <input id="istri"  type="file"  name="istri" >
 			                    <p class="help-block">KTP Istri</p>
 			                </div>
 			                <div class="form-group">
@@ -218,7 +219,7 @@
 			                </div>
 			                <div class="form-group">
 								<label class="control-label">FC SIM C yang Berlaku:</label>
-			                    <input id="gaji"  type="file"  name="sim" >
+			                    <input id="sim"  type="file"  name="sim" >
 			                    <p class="help-block">SIM C</p>
 			                </div>
 		                </div>
@@ -243,22 +244,58 @@
 					 			<div class="clearfix"></div>
 							</div>
 			            </div>
-
+			            <?php
+			            	if ($bjns==1) {
+			            		# code...
+			            	
+			            ?>
 			            <div class="col-md-6 cart-items" >
 			            	<div class="form-group" >
 								<div id="pd" class="price-details" style="border-bottom: 0px; " >
 							 		<h2>Pilihan Angsuran</h2>
+							 		<span style="width: 45%;">Nama Finance</span>
+									<span><span class="total" style="text-align: right;"><?php
+									echo $namaf; ?></span> </span>
 							 		<span style="width: 45%;">Jangka Waktu</span>
 									<span><span class="total" style="text-align: right;"><?php
 									echo $jawu; ?> Bulan</span> </span>
+									<span style="width: 45%;">Jenis Angsuran</span>
+									<span><span class="total" style="text-align: right;">Bunga Tetap</span> </span>
 									<span style="width: 45%;">Angsuran Per Bulan</span>
-									<span>Rp <span class="total" style="text-align: right;"><?php echo $ang; ?></span></span>
+									<span>Rp <span class="total" style="text-align: right;"><?php echo number_format($ang); ?></span></span>
 							 		<div class="clearfix"></div>				 
 								</div>	
 								
 					 			<div class="clearfix"></div>
 							</div>
 			            </div>
+			            <?php
+			            	}else{
+
+			            ?>
+			            <div class="col-md-6 cart-items" >
+			            	<div class="form-group" >
+								<div id="pd" class="price-details" style="border-bottom: 0px; " >
+							 		<h2>Pilihan Angsuran</h2>
+							 		<span style="width: 45%;">Nama Finance</span>
+									<span><span class="total" style="text-align: right;"><?php
+									echo $namaf; ?></span> </span>
+							 		<span style="width: 45%;">Jangka Waktu</span>
+									<span><span class="total" style="text-align: right;"><?php
+									echo $jawu; ?> Bulan</span> </span>
+									<span style="width: 45%;">Jenis Angsuran</span>
+									<span><span class="total" style="text-align: right;">Bunga Menurun</span> </span>
+									<span style="width: 45%;">Angsuran Pertama</span>
+									<span>Rp <span class="total" style="text-align: right;"><?php echo number_format($ang); ?></span></span>
+							 		<div class="clearfix"></div>				 
+								</div>	
+								
+					 			<div class="clearfix"></div>
+							</div>
+			            </div>
+			            <?php
+			            	}
+			            ?>
 	                </div>
 	                <div class="col-md-6 cart-items">
 		            	<div class="form-group" >

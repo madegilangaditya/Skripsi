@@ -1,10 +1,3 @@
-<?php
-    $sel = mysql_query("select tb_login.id_login, tb_finance.id_finance from tb_login inner join tb_finance on tb_login.id_login=tb_finance.id_login  where username='$_SESSION[user]'");
-    $br=mysql_fetch_assoc($sel);
-    $_SESSION['finance']=$br['id_finance'];
-    //echo "".$_SESSION['finance'];
-    
-?>
  <nav class="navbar-default navbar-static-top" role="navigation">
              <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -51,15 +44,7 @@
                     </li>
                    
                     <li>
-                        <a href="admin.php?page=suku-bunga" class=" hvr-bounce-to-right"><i class="fa fa-motorcycle nav_icon"></i> <span class="nav-label">Suku Bunga</span></a>
-                    </li>
-
-                    <li>
-                        <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Data Kredit</span></a> 
-                    </li>
-
-                    <li>
-                        <a href="admin.php?page=data-surveyor" class=" hvr-bounce-to-right"><i class="fa fa-user nav_icon"></i> <span class="nav-label">Data Surveyor</span></a>
+                        <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Data Survey</span></a> 
                     </li>
                 </ul>
             </div>

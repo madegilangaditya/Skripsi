@@ -39,70 +39,111 @@
 						//echo "tes $idf ".$bar[bunga_tetap];
 						?>
 						<form name="input_data" action="proses-bunga.php" method="post" enctype="multipart/form-data">
-						<input name="id" type="hidden" value="<?php echo "$idd"; ?>">
-						
-						<div class="col-md-6 form-group2 group-mail">
-							<label class="control-label" style="display: block;">Bunga Tetap</label>
-							<input type="text" class="form-control" name="butap" id="butap" placeholder="Bunga Tetap" required value="<?php echo $butap; ?>" style="display: inline; width: 80%;">
-							<span class="control-label">%</span>
-						</div>
-
-						<div class="col-md-6 form-group2 group-mail">
-							<label class="control-label">Bunga Menurun</label>
-							<input type="text" class="form-control" name="burun" id="burun" placeholder="Bunga Menurun" required value="<?php echo $burun; ?>"
-							style="display: inline; width: 80%;">
-							<span class="control-label">%</span>
-						</div>	 
-
-						<div class="col-md-12 form-group2 group-mail">
-							<label class="control-label">Biaya Administrasi</label>
-							<input type="number" class="form-control" name="biaya" id="biaya" placeholder="Harga" required value="<?php echo $biaya; ?>">
-						</div>
-						<?php
-							$sl = mysql_query("select jangka_waktu from tb_bunga where id_finance='$idd' order by jangka_waktu ASC");
+							<input name="id" type="hidden" value="<?php echo "$idd"; ?>">
 							
-							
-						?>
-						<div class="col-md-12 form-group group-mail" id="jawu" >
-							<label class="control-label" style="display: block;">Jangka Waktu</label>
-							
-							<!--input type="text" class="form-control" name="bulan[]" id="bulan" placeholder="Jangka Waktu" required style="width: 80%; display: inline;">
-							<span class="control-label">Bulan</span>
-							<a  id="add" class="btn btn-primary add">Tambah</a-->
-						
-						<?php
-							
-							for($i=0;$i<mysql_num_rows($sl);$i++) {
-								$br = mysql_fetch_array($sl);
-								$jw = $br['jangka_waktu'];
-								# code...
-								if ($i==0) {
-									echo "<input type='text' class='form-control' name='bulan[]' id='bulan' placeholder='Jangka Waktu' required style='width: 80%; display: inline;' value='$jw'>
-							<span class='control-label'>Bulan</span>
-							<a  id='add' class='btn btn-primary add'>Tambah</a>";
-								}else{
-						?>
-							
-							<div id="jawu<?php echo $i; ?>" style="padding-top:10px;">
-							<input type="text" class="form-control" name="bulan[]" id="bulan" placeholder="Jangka Waktu" required style="width: 80%; display: inline;" value="<?php echo $jw; ?>">
-							<span class="control-label">Bulan</span>
-							<a  id="remove" class="btn btn-danger add">Hapus</a> 
+							<div class="col-md-6 form-group2 group-mail">
+								<label class="control-label" style="display: block;">Bunga Tetap</label>
+								<input type="text" class="form-control" name="butap" id="butap" placeholder="Bunga Tetap" required value="<?php echo $butap; ?>" style="display: inline; width: 80%;">
+								<span class="control-label">%</span>
 							</div>
+
+							<div class="col-md-6 form-group2 group-mail">
+								<label class="control-label">Bunga Menurun</label>
+								<input type="text" class="form-control" name="burun" id="burun" placeholder="Bunga Menurun" required value="<?php echo $burun; ?>"
+								style="display: inline; width: 80%;">
+								<span class="control-label">%</span>
+							</div>	 
+
+							<div class="col-md-12 form-group2 group-mail">
+								<label class="control-label">Biaya Administrasi</label>
+								<input type="number" class="form-control" name="biaya" id="biaya" placeholder="Harga" required value="<?php echo $biaya; ?>">
+							</div>
+							
+							<!--div class="col-md-12 form-group group-mail" id="jawu" >
+								<label class="control-label" style="display: block;">Jangka Waktu</label>
 								
-						
-						<?php
-								}
-							}
-						?>
-						</div>
-						<div class="col-md-12 form-group2 group-mail">
-							<button class="btn-success btn" name="submit" style="margin-right: 5em;">Update</button>
-							<button onclick="history.back();" type="button" class="btn-danger btn">Back</button>
-						</div>
+								<!input type="text" class="form-control" name="bulan[]" id="bulan" placeholder="Jangka Waktu" required style="width: 80%; display: inline;">
+								<span class="control-label">Bulan</span>
+								<a  id="add" class="btn btn-primary add">Tambah</a>
+							
+								<?php
+									
+									for($i=0;$i<mysql_num_rows($sl);$i++) {
+										$br = mysql_fetch_array($sl);
+										$jw = $br['jangka_waktu'];
+										# code...
+										if ($i==0) {
+											echo "<input type='text' class='form-control' name='bulan[]' id='bulan' placeholder='Jangka Waktu' required style='width: 80%; display: inline;' value='$jw'>
+									<span class='control-label'>Bulan</span>
+									<a  id='add' class='btn btn-primary add'>Tambah</a>";
+										}else{
+								?>
+									
+									<div id="jawu<?php echo $i; ?>" style="padding-top:10px;">
+									<input type="text" class="form-control" name="bulan[]" id="bulan" placeholder="Jangka Waktu" required style="width: 80%; display: inline;" value="<?php echo $jw; ?>">
+									<span class="control-label">Bulan</span>
+									<a  id="remove" class="btn btn-danger add">Hapus</a> 
+									</div>
+										
+								
+								<?php
+										}
+									}
+								?>
+							</div-->
+							<div class="col-md-12 form-group2 group-mail">
+								<button class="btn-success btn" name="submit" style="margin-right: 5em;">Update</button>
+								<button onclick="history.back();" type="button" class="btn-danger btn">Back</button>
+							</div>
 						</form>
 							<div class="clearfix"> </div>
 					</div>
-					<div class="clearfix"> </div>
+					<?php
+						$ef = mysql_query("select id_bunga from tb_bunga where id_finance='$idd'");
+						if (mysql_num_rows($ef)==0) {
+							# code...
+							echo "";
+						}else{
+
+						$b=mysql_fetch_assoc($ef);
+						$idb=$b['id_bunga'];
+						$sl = mysql_query("select jangka_waktu from tb_jawu where id_bunga='$idb' order by jangka_waktu ASC");
+					?>
+					<div class="grid-form1">
+						<div class="col-md-12 form-group2 group-mail">
+							<label class="control-label" style="display: block;">Jangka Waktu</label>
+							<input name="idb" id="idb" type="hidden" value="<?php echo "$idb"; ?>">
+							<input type="number" class="form-control" name="bulan" id="bulan" placeholder="Jangka Waktu" style="display: inline; width: 80%;">
+							<a id='tbh' class='btn btn-primary add' >Tambah</a>
+						</div>
+			
+						<div class="col-md-12 form-group2 group-mail">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Jangka Waktu</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody id="jw">
+									<?php
+										while ($jw=mysql_fetch_array($sl)) {
+									?>
+									<tr>
+										<td><?php echo $jw['jangka_waktu'];?></td>
+										<td><a href='#'><i class='fa fa-trash fa-lg'></i></a></td>
+									</tr>
+									<?php
+										}
+									?>
+								</tbody>
+							</table>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<?php
+						}
+					?>
 				</div>
 			</div>
 			<div class="clearfix"> </div>
@@ -130,7 +171,7 @@
     });
      
      
-    $('body').on('click','#remove',function(){
+    /*$('body').on('click','#tbh',function(){
     	 var bulan = $(this).parent('div').val();
     	 console.log
             $.ajax({
@@ -146,10 +187,31 @@
 
    
     
-    });
+    });*/
      
   });
 
+</script>
+
+<script type="text/javascript">
+var htmlobjek;
+	$(document).ready(function(){
+      //apabila terjadi event onchange terhadap object <select id=provinsi>
+      $("#tbh").click(function(){
+        var bulan = $("#bulan").val();
+        var idb = $("#idb").val();
+        $.ajax({
+            url: "add-jawu.php",
+            data: "bulan="+bulan+"&idb="+idb,
+            cache: false,
+            success: function(msg){
+                //jika data sukses diambil dari server kita tampilkan
+                //di <select id=kota>
+                $("#jw").html(msg);
+            }
+        });
+      });
+    });      
 </script>
 
 
