@@ -139,7 +139,7 @@
 
 </script>
 
-<!--script type="text/javascript">
+<script type="text/javascript">
 	$(document).ready(function() {
 		$("#results" ).load( "page-test1.php");
 		
@@ -150,7 +150,7 @@
 			$("#results").load("page-test1.php",{"page":page}, function(){});
 		});
 	});
-</script-->
+</script>
 		
 	
   

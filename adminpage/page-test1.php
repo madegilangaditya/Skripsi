@@ -1,4 +1,5 @@
 <?php
+session_start();
 if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
 	
 	include("koneksi.php"); 
@@ -9,17 +10,17 @@ if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SER
 		$page_number = 1;
 	}
 	$item_per_page = 10;
-	$results = mysql_query("SELECT * FROM tb_transaksi where status=2");
+	$results = mysql_query("SELECT * FROM tb_kredit where status=1 and id_surveyor='$_SESSION[surveyor]'");
 	$get_total_rows = mysql_num_rows($results);
 	
 	$total_pages = ceil($get_total_rows/$item_per_page);
 	
 	$page_position = (($page_number-1) * $item_per_page);
 	//echo "tes $get_total_rows, $total_pages, $page_position";
-	echo "tes $_SESSION[user]";
+	//echo "tes $_SESSION[user]";
 ?>
 	<div class='table'>
-		<h2 align='center'>Penjualan Belum Dikonfirmasi <br><br></h2>
+		<h2>Permintaan Kredit Belum Di Survey <br><br></h2>
 		<table class="table table-bordered"'>
 			<thead>
 				<tr>
@@ -50,8 +51,8 @@ if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SER
 					<td><?php echo $bar[nama_pelanggan]; ?></td>
 					<td><?php echo $bar[alamat]; ?></td>
 					<td>
-						<a class='btn btn-success' href='konfirmasi-trans.php?id=<?php echo $bar[id_kredit]; ?>'>Konfirmasi</a>
-						<a class='btn btn-info' href='proses-delete-harga.php?id=<?php echo $bar[id_kredit]; ?>' >View</a>
+						<a class='btn btn-success' href='admin.php?page=form-survey&id=<?php echo $bar[id_kredit]; ?>'>Survey</a>
+						<a class='btn btn-info' href='#' >View</a>
 					</td>
 				</tr>
 			</tbody>
@@ -85,7 +86,7 @@ if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SER
 			$('#modal-loader').show();      // load ajax loader
 			
 			$.ajax({
-				url: 'get-trans.php',
+				url: 'get-kredit.php',
 				type: 'POST',
 				data: 'id='+uid,
 				dataType: 'html'
