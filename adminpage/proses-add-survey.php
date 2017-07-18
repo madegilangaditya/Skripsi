@@ -66,10 +66,23 @@
 	$pdam_tmp =$_FILES["fpdam"]["tmp_name"];
 	$pdam_n = $pdam_f."/".$_FILES["fpdam"]["name"];
 	move_uploaded_file($pdam_tmp, $pdam_n);
-	
-	$ins = mysql_query("insert into tb_survey(id_kredit, nama_penjamin, hubungan_penjamin, no_ktp, telepon, jk_pe, id_kec_pe, alamat, gmb_ktp, j_rmh, p_rmh, l_rmh, sw_rmh, l_tinggal, b_rumah, tanggungan, b_listrik, b_pdam, gmb_pln, gmb_pdam, tgl_survey, umur_p) values ('$idk', '$namape', '$hub', '$ktppe', '$telppe', '$kelaminpe', '$kecpe', '$alamatpe', '$penjamin_n', '$jrmh','$p_rmh','$l_rmh','$sewa','$tinggal','$bia_rt','$tanggungan', '$bia_pln','$bia_pdam','$pln_n', '$pdam_n', '$tanggal', '$umur')");
 
-	$upd = mysql_query("update tb_kredit set gmb_suami='$pemohon_n', status=2 where id_kredit='$idk'");
+	$se=mysql_query("select id_penjamin from tb_penjamin where no_ktp='$ktppe' AND nama_penjamin='$namape' AND alamat='$alamatpe' AND id_kec_pe='$kecpe' AND jk_pe='$kelaminpe' AND telepon='$telppe' AND hubungan_penjamin='$hub' AND gmb_ktp='$penjamin_n'") or die(mysql_error());
+	if (mysql_num_rows($se)==0) {
+		# code...
+	$inspe = mysql_query("insert into tb_penjamin(nama_penjamin, hubungan_penjamin, no_ktp, telepon, jk_pe, id_kec_pe, alamat, gmb_ktp) values ('$namape', '$hub', '$ktppe', '$telppe', '$kelaminpe', '$kecpe', '$alamatpe', '$penjamin_n')");
+	$sel1 = mysql_query("SELECT MAX(id_penjamin) AS idpe FROM tb_penjamin");
+	$br1=mysql_fetch_assoc($sel1);
+		$idpe=$br1['idpe'];
+	}else{
+		$br1=mysql_fetch_assoc($se);
+		$idpe=$br1['id_penjamin'];
+		//echo "tes $idpe";
+	}
+
+	$ins = mysql_query("insert into tb_survey(id_kredit, id_penjamin, j_rmh, p_rmh, l_rmh, sw_rmh, l_tinggal, b_rumah, tanggungan, b_listrik, b_pdam, gmb_pln, gmb_pdam, tgl_survey, umur_p) values ('$idk', '$idpe', '$jrmh','$p_rmh','$l_rmh','$sewa','$tinggal','$bia_rt','$tanggungan', '$bia_pln','$bia_pdam','$pln_n', '$pdam_n', '$tanggal', '$umur')");
+
+	$upd = mysql_query("update tb_kredit set status=2 where id_kredit='$idk'");
 
 	$sel = mysql_query("SELECT MAX(id_survey) AS ids FROM tb_survey");
 	$br=mysql_fetch_assoc($sel);

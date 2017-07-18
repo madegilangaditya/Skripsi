@@ -106,7 +106,7 @@
 												<td>
 						
 													<a class='btn btn-success' href='admin.php?page=form-survey&id=$baris[id_survey]'>Approve</a>
-													<a class='btn btn-info' href='#' >View</a>
+													<a class='btn btn-info' href='#' data-toggle='modal' data-target='#view-modal' data-id='$baris[id_survey]' id='getUser'>View</a>
 												
 												</td>													
 												</tr>";

@@ -42,10 +42,14 @@ include "head.php";
 						 	$id=$_GET['id'];
 						 	$_SESSION['hrg']=$id;
 						 	//echo "tes ".$_SESSION['hrg'];
-						 	$sql = mysql_query("SELECT tb_harga.id_det_motor, tb_harga.id_dealer, tb_harga.harga_cash,tb_det_motor.nama_det_motor, tb_det_motor.id_motor FROM tb_harga INNER JOIN tb_det_motor ON tb_det_motor.id_det_motor=tb_harga.id_det_motor WHERE id_harga=$id");
+						 	$sql = mysql_query("SELECT tb_harga.id_det_motor, tb_harga.id_dealer, tb_dealer.nama_dealer, tb_harga.harga_cash,tb_det_motor.nama_det_motor, tb_det_motor.id_motor FROM tb_harga 
+						 		INNER JOIN tb_det_motor ON tb_det_motor.id_det_motor=tb_harga.id_det_motor 
+						 		inner join tb_dealer on tb_harga.id_dealer=tb_dealer.id_dealer WHERE id_harga=$id");
 						 	$bar=mysql_fetch_array($sql);
 						 	$nama=$bar['nama_det_motor'];
 						 	$idd = $bar['id_det_motor'];
+						 	$namad = $bar['nama_dealer'];
+						 	$hrg = number_format($bar['harga_cash'],0, ".", ".");
 						 
 						 	$idm=$bar['id_motor'];
 						 	$sql1=mysql_query("select * from tb_motor where id_motor=$idm");
@@ -79,23 +83,10 @@ include "head.php";
 						<!--h4>Model No: 3498</h4-->
 						
 							<?php
-								echo "<input name='iddm' type='hidden' value='$id'>";
-								$sel=mysql_query("select tb_harga.id_harga, tb_harga.harga_cash, tb_harga.id_dealer from tb_harga where id_det_motor=$id order by harga_cash ASC");
-								while($baris=mysql_fetch_array($sel)){
-									$sel1=mysql_query("select tb_dealer.nama_dealer from tb_dealer where id_dealer=$baris[id_dealer]");
 								
-									while ($baris1=mysql_fetch_array($sel1)) {
-										$h=$baris['harga_cash'];
-										$hrg=number_format($h, 0, ".", ".");
-										# code...
-								/*echo "<p style='display:inline;'><label>Rp </label>$hrg <a href='#'>$baris1[nama_dealer] </a></p> 
-									<div class='btn_form' style='display:inline;'>
-								<input name='id$baris[id_harga]' type='hidden' value='$baris[id_harga]'>
-								<button type='submit'class='btn btn-success' name='btn$baris[id_harga]' value='$baris[id_harga]'>Buy Now</button>
-								<button data-toggle='modal' data-target='#view-modal' data-id='$baris[id_harga]' id='getUser' class='btn btn-info'>Fasilitas</button>
-								</div></br>";*/
-									}
-								}
+								echo "<p style='display:inline;'><label>Rp </label>$hrg <a href='#'>$namad </a></p> 
+									</br>";
+									
 							?>
 							<p class="size">Warna ::</p>
 							<select name="warna" id="warna" class="form-control" style="display: inline; width: 25%;">

@@ -45,7 +45,7 @@
 
 							<div class="col-md-6 form-group ">
 								<label class="control-label">Nama Lengkap</label>
-								<input type="text" class="form-control" name="nama-P" id="nama-P" placeholder="Nama Lengkap" value="<?php echo $nama; ?>" required>
+								<input type="text" class="form-control" name="nama-P" id="nama-P" placeholder="Nama Lengkap" value="<?php echo $nama; ?>" required disabled>
 							</div>
 
 							<div class="col-md-6 form-group">
@@ -63,19 +63,19 @@
 							<div class="col-md-6 form-group">
 				                <label class="control-label">Jenis Kelamin:</label>
 				                <div>
-				                    <label class="radio-inline"><input type="radio" name="kelamin-P" value="1" <?php if ($kelamin== 1) {echo "checked";}?>>Pria</label>
-									<label class="radio-inline"><input type="radio" name="kelamin-P" value="2" <?php if ($kelamin== 2) {echo "checked";}?>>Wanita</label>
+				                    <label class="radio-inline"><input type="radio" name="kelamin-P" value="1" <?php if ($kelamin== 1) {echo "checked";}?> disabled>Pria</label>
+									<label class="radio-inline"><input type="radio" name="kelamin-P" value="2" <?php if ($kelamin== 2) {echo "checked";}?>disabled>Wanita</label>
 								</div>
 							</div>
 
 							<div class="col-md-6 form-group ">
 								<label class="control-label">Nomor KTP</label>
-								<input type="number" class="form-control" name="ktp-P" id="ktp-P" placeholder="Nomor KTP" value="<?php echo $nktp; ?>" required>
+								<input type="number" class="form-control" name="ktp-P" id="ktp-P" placeholder="Nomor KTP" value="<?php echo $nktp; ?>" required disabled>
 							</div>
 
 							<div class="col-md-6 form-group ">
 								<label class="control-label" for="selector1">Provinsi</label>
-								<select name="provinsi-P" class="form-control" id="provinsi">
+								<select name="provinsi-P" class="form-control" id="provinsi" disabled>
 									<?php echo "<option value=\"$iprov\">$prov</option>\n"; ?>
 									<?php
 										$provinsi = mysql_query("SELECT * FROM tb_provinsi ORDER BY nama_provinsi");
@@ -88,12 +88,12 @@
 							
 							<div class="col-md-6 form-group">
 								<label class="control-label">Telepon</label>
-			                    <input id="telp-P" class="form-control" type="number" placeholder="Telepon" name="telp-P" value="<?php echo "".$telp;?>">
+			                    <input id="telp-P" class="form-control" type="number" placeholder="Telepon" name="telp-P" value="<?php echo "".$telp;?>" disabled>
 			                </div>
 							
 							<div class="col-md-6 form-group ">
 								<label class="control-label" for="selector1">Kabupaten</label>
-								<select name="kabupaten-P" class="form-control" id="kabupaten">
+								<select name="kabupaten-P" class="form-control" id="kabupaten" disabled>
 									<?php echo "<option value=\"$ikab\">$kab</option>\n"; ?>
 									<?php
 										$kabupaten = mysql_query("SELECT * FROM tb_kabupaten  where id_provinsi=$cek5 ORDER BY nama_kabupaten");
@@ -113,7 +113,7 @@
 
 							<div class="col-md-6 form-group ">
 								<label class="control-label" for="selector1">Kecamatan</label>
-								<select name="kecamatan-P" class="form-control" id="kecamatan">
+								<select name="kecamatan-P" class="form-control" id="kecamatan" disabled>
 									<?php echo "<option value=\"$ikec\">$kec</option>\n"; ?>
 									<?php
 										$kecamatan = mysql_query("SELECT * FROM tb_kecamatan where id_kabupaten=$cek4 ORDER BY nama_kecamatan");
@@ -126,12 +126,12 @@
 
 			                <div class="col-md-12 form-group">
 			 					 <label for="comment">Alamat:</label>
-			  					 <textarea class="form-control" rows="5" id="alamat" name="alamat-P"><?php echo "".$alamat;?></textarea>
+			  					 <textarea class="form-control" rows="5" id="alamat" name="alamat-P" disabled><?php echo "".$alamat;?></textarea>
 							</div>
 
 							<div class="col-md-6 form-group">
 								<label class="control-label">FC. KTP Pemohon:</label>
-			                    <input id="ktp-P" type="file"  name="fktp-P" >
+			                    <input id="ktp-P" type="file"  name="fktp-P" disabled>
 			                    <p class="help-block">FC. KTP Pemohon</p>
 			                </div>
 							
@@ -178,7 +178,7 @@
 							<div class="col-md-6 form-group ">
 								<label class="control-label" for="selector1">Kabupaten</label>
 								<select name="kabupaten-pe" class="form-control" id="kabupaten1">
-									<?php echo "<option value=\"$cek4\">$cek2</option>\n"; ?>
+									<?php echo "<option>Pilih Kabupaten</option>\n"; ?>
 									<?php
 										$kabupaten = mysql_query("SELECT * FROM tb_kabupaten  where id_provinsi=$cek5 ORDER BY nama_kabupaten");
 											while($p=mysql_fetch_array($kabupaten)){
@@ -197,7 +197,7 @@
 							<div class="col-md-6 form-group ">
 								<label class="control-label" for="selector1">Kecamatan</label>
 								<select name="kecamatan-pe" class="form-control" id="kecamatan1">
-									<?php echo "<option value=\"$kec\">$cek1</option>\n"; ?>
+									<?php echo "<option>Pilih Kecamatan</option>\n"; ?>
 									<?php
 										$kecamatan = mysql_query("SELECT * FROM tb_kecamatan where id_kabupaten=$cek4 ORDER BY nama_kecamatan");
 											while($p=mysql_fetch_array($kecamatan)){

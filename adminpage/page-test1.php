@@ -22,6 +22,10 @@ if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SER
 	<div class='table'>
 		<h2>Permintaan Kredit Belum Di Survey <br><br></h2>
 		<table class="table table-bordered"'>
+			<?php
+				$result = mysql_query("SELECT tb_pelanggan.nama_pelanggan, tb_pelanggan.alamat, tb_kredit.tgl_pengajuan, tb_kredit.id_kredit FROM tb_kredit INNER JOIN tb_pelanggan ON tb_pelanggan.`id_pelanggan`=tb_kredit.id_pelanggan  WHERE tb_kredit.status=1 AND tb_kredit.id_surveyor=$_SESSION[surveyor] ORDER BY tb_kredit.tgl_pengajuan DESC LIMIT $page_position, $item_per_page");
+				$no = 1+$page_position;
+			?>
 			<thead>
 				<tr>
 					<th>No</th>
@@ -34,30 +38,36 @@ if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SER
 			</thead>
 			
 			<?php 
-				$result = mysql_query("SELECT tb_pelanggan.nama_pelanggan, tb_pelanggan.alamat, tb_kredit.tgl_pengajuan, tb_kredit.id_kredit FROM tb_kredit INNER JOIN tb_pelanggan ON tb_pelanggan.`id_pelanggan`=tb_kredit.id_pelanggan  WHERE tb_kredit.status=1 AND tb_kredit.id_surveyor=$_SESSION[surveyor] ORDER BY tb_kredit.tgl_pengajuan DESC LIMIT $page_position, $item_per_page");
-				$no = 1+$page_position;
+
 				while($bar=mysql_fetch_array($result)) { 
 					$tgl = date("d F Y H:i:s", strtotime($bar['tgl_pengajuan']));
 					//$hrg=number_format($bar['jumlah_harga'], 0, ".", ".");
+
 			?>
-			<tbody>
-				<tr>
-					<td align='center'><?php echo $no; ?></td>
-					<td>
-						<div>No.Kredit:
-							<a href='#' data-toggle='modal' data-target='#view-modal' data-id='<?php echo $bar[id_kredit]; ?>' id='getUser'  style='color: #b30143;'><?php echo $bar[id_kredit]; ?></a>
-						</div><?php echo $tgl; ?>
-					</td>
-					<td><?php echo $bar[nama_pelanggan]; ?></td>
-					<td><?php echo $bar[alamat]; ?></td>
-					<td>
-						<a class='btn btn-success' href='admin.php?page=form-survey&id=<?php echo $bar[id_kredit]; ?>'>Survey</a>
-						<a class='btn btn-info' href='#' >View</a>
-					</td>
-				</tr>
-			</tbody>
-			<?php $no++;} ?>
+				<tbody>
+					<tr>
+						<td align='center'><?php echo $no; ?></td>
+						<td>
+							<div>No.Kredit:
+								<a href='#' data-toggle='modal' data-target='#view-modal' data-id='<?php echo $bar[id_kredit]; ?>' id='getUser'  style='color: #b30143;'><?php echo $bar[id_kredit]; ?></a>
+							</div><?php echo $tgl; ?>
+						</td>
+						<td><?php echo $bar[nama_pelanggan]; ?></td>
+						<td><?php echo $bar[alamat]; ?></td>
+						<td>
+							<a class='btn btn-success' href='admin.php?page=form-survey&id=<?php echo $bar[id_kredit]; ?>'>Survey</a>
+							<a class='btn btn-info' href='#' >View</a>
+						</td>
+					</tr>
+				</tbody>
+			<?php 
+					$no++;
+				}
+			
+			 
+			?>
 		</table>
+		
 		<?php echo paginate_function($item_per_page, $page_number, $get_total_rows, $total_pages); ?></td>
 	</div>
 	<!--Modal-->
