@@ -16,7 +16,8 @@ include "adminpage/koneksi.php";
 						  <li class="dropdown1"><a href="merk.php">Motor</a></li>
 						<li class="dropdown1"><a href="#" ><?php echo "" .$_SESSION['username'];?></a>
                          <ul class="dropdown2">
-                         	<li><a href="data-trans.php">Riwayat Belanja</a></li>
+  	                       	<li><a href="data-trans.php">Riwayat Belanja</a></li>
+                         	<li><a href="kredit-berjalan.php">Kredit Berjalan</a></li>
                          	<li><a href="logout.php">Logout</a></li>
                          </ul>       
                          </li>

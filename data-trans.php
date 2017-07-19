@@ -24,53 +24,10 @@
 		<div class="cart" style="background: #f8f8f8;">
 			<div class="container" style="background: #ffffff;">
 				<div class="col-md-12 cart-items">
-					<h2>Riwayat Transaksi</h2>
-					<table class="table table-hover">
-						<thead>
-					    	<tr>
-					      		<th>No</th>
-						        <th>Detail Transaksi</th>
-						        <th>Total Harga</th>
-						        <th>Status</th>
-						        <th>Action</th>
-					      	</tr>
-					    </thead>
-
-					    <tbody id="responds"> 
-						<?php
-							$idl=$_SESSION['idl'];
-							$sel = mysql_query("select id_pelanggan from tb_pelanggan where id_login=$idl");
-							while($bar=mysql_fetch_array($sel)){
-								$idp = $bar['id_pelanggan'];
-								$sel1 = mysql_query("select * from tb_transaksi where id_pelanggan=$idp order by tgl_transaksi DESC");
-								while($res=mysql_fetch_array($sel1)){
-									$tgl = date("d F Y H:i:s", strtotime($res['tgl_transaksi']));
-									$hrg=number_format($res['jumlah_harga'], 0, ".", ".");
-									$nomor++;
-									echo "<tr id='item_$res[id_transaksi]'>
-										<td>$nomor</td>
-										<td><div>No.Transaksi:
-										<a href='#' data-toggle='modal' data-target='#view-modal' data-id='$res[id_transaksi]' id='getUser'  style='color: #b30143;'>$res[id_transaksi]</a></div>$tgl</td>
-										
-										<td>Rp $hrg</td>";
-										if($res['status']==1){
-											$st='Lunas';
-										}else{
-											$st='Menunggu Pembayaran';
-										}
-									echo "		
-										<td>$st</td>
-										<td>
-											<a href='#' class='btn btn-info'>Beli Lagi</a>
-											<a id='del-$res[id_transaksi]' href='#' class='btn btn-danger'>Hapus</a>
-											
-										</td>			
-										</tr>";
-								}
-							}	
-						?>
-					 	</tbody>
-					</table> 
+					<div class="col-md-12 cart-items" style="margin-bottom: 1em;" id="results">
+					
+					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -151,4 +108,16 @@
             });
           });
         });
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#results" ).load( "riwayat.php");
+		
+		$("#results").on( "click", ".pagination a", function (e){
+			e.preventDefault();
+			var page = $(this).attr("data-page");
+			$("#results").load("riwayat.php",{"page":page}, function(){});
+		});
+	});
 </script>

@@ -500,6 +500,7 @@
 <form method="post" action="aprove.php" enctype="multipart/form-data">   
     <div class="modal-footer"> 
     	<input type="hidden" name="idk" value="<?php echo "$idt"; ?>">
+    	<input type="hidden" name="ids" value="<?php echo "$id"; ?>">
         <button type="submit" class="btn btn-success" name="aprove">Accept</button>
         <button type="submit" class="btn btn-warning" name="reject">Reject</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  

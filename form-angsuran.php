@@ -101,13 +101,17 @@
 					$m=idate("m");
 					$y=idate("y");
 					$t=$d+$m+$y+$z;
-					$tot = $hrg - $umuka + $bia;
-					$_SESSION['angtot']=$tot;
+					
 					$fe = mysql_query("SELECT tb_bunga.id_finance, tb_jawu.jangka_waktu, tb_finance.nama_finance FROM tb_jawu INNER JOIN tb_bunga ON tb_bunga.id_bunga=tb_jawu.id_bunga INNER JOIN tb_finance ON tb_finance.id_finance=tb_bunga.id_finance WHERE id_jawu = '$_SESSION[idb]'");
 					$b=mysql_fetch_assoc($fe);
 					$idf = $b['id_finance'];
 					$namaf = $b['nama_finance'];
 					$jawu = $b['jangka_waktu'];
+					$tot = $hrg - $umuka + $bia;
+					$_SESSION['angtot']=$tot;
+					// $ang_tot=$ang*$jawu;
+					// $butot=$ang_tot-$tot;
+					// $_SESSION['butot']=$butot;
 				?>
 
 				<form method="post" action="proses-kredit.php" enctype="multipart/form-data">
@@ -239,6 +243,12 @@
 									<span>Rp <span class="total" style="text-align: right;"><?php
 									echo"-";
 									echo number_format(doubleval($umuka)); ?></span></span>
+									<!-- <span style="width: 45%;">Angsuran Pokok</span>
+									<span>Rp <span class="total" style="text-align: right;"><?php 
+									echo number_format(doubleval($tot)); ?></span></span>
+									<span style="width: 45%;">Bunga Total</span>
+									<span>Rp <span class="total" style="text-align: right;"><?php 
+									echo number_format(doubleval($butot)); ?></span></span> -->
 							 		<div class="clearfix"></div>				 
 								</div>	
 					 			<div class="clearfix"></div>
@@ -301,6 +311,7 @@
 		            	<div class="form-group" >
 							<h4 class="last-price" style="width: 40%;">Angsuran Pokok</h4>
 							<span class="total final" name="total" style="width: 60%; text-align: right;">Rp <?php echo number_format($tot); ?></span>
+							
 				 			<div class="clearfix"></div>
 						</div>
 						<div class="form-group" >
