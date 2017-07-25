@@ -19,7 +19,7 @@ if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SER
 
 ?>
 	<div class='table'>
-		<h2 align='center'>Penjualan Belum Dikonfirmasi <br><br></h2>
+		<h2>Transaksi Cash Belum Dikonfirmasi <br><br></h2>
 		<table class="table table-bordered"'>
 			<thead>
 				<tr>

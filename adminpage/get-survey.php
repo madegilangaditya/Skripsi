@@ -349,9 +349,9 @@
 							$g=$bkr['untung'];
 							$gp = number_format($bkr['untung'], 0, ".", ".");
 							
-							if ($bkr['jns_usaha']==1) {
+							if ($bkr['jenis_usaha']==1) {
 								$b="Produksi";
-							}else if ($bkr['jns_usaha']==2) {
+							}else if ($bkr['jenis_usaha']==2) {
 								$b="Transportasi";
 							}else{
 								$b="Jual-Beli";

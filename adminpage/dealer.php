@@ -67,7 +67,7 @@
 				<div class="col-md-12 " style="margin-top: 20px;">
 					<div class="grid-form">				
 						<div class="grid-form1">
-						 	<h3 id="forms-example" class="" style="margin-bottom: 0px;">Konfirmasi Penjualan</h3>
+						 	<h3 id="forms-example" class="" style="margin-bottom: 0px;">Konfirmasi Penjualan Cash</h3>
 							<!--a href="admin.php?page=add-harga" class="btn btn-info" style="float: right;">Add Motor</a--><br class="clear" /><br class="clear" />
 							<table class="table table-bordered">
 								<thead>
@@ -111,8 +111,65 @@
 												<td>Belum Dikirim</td>
 												<td>
 						
-													<a class='btn btn-success' href='konfirmasi-trans.php?id=$baris[id_transaksi]'>Konfirmasi</a>
+													<a class='btn btn-success' href='konfirmasi-kirim.php?id=$baris[id_transaksi]'>Konfirmasi</a>
 													<a class='btn btn-info' href='proses-delete-harga.php?id=$baris[id_transaksi]' >View</a>
+												</td>																		
+													</tr>";
+											$i++;
+											}
+										}
+									?>
+								</tbody>
+							</table>
+
+						</div>
+
+						<div class="grid-form1">
+						 	<h3 id="forms-example" class="" style="margin-bottom: 0px;">Konfirmasi Penjualan Kredit</h3>
+							<!--a href="admin.php?page=add-harga" class="btn btn-info" style="float: right;">Add Motor</a--><br class="clear" /><br class="clear" />
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>No</th>
+										<!--th>Gambar</th-->
+										<th>Tanggal</th>
+										<th>Nama Motor</th>
+										<th>Total</th>
+										<th>Status</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+										$user=$_SESSION['user'];
+										$sel = mysql_query("Select id_login from tb_login where username='$user'");
+										$bar= mysql_fetch_array($sel);
+										$idl=$bar['id_login'];
+										$sel1 = mysql_query("select * from tb_dealer where id_login=$idl");
+										$bar1= mysql_fetch_array($sel1);
+										$idd=$bar1['id_dealer'];
+										$qw = mysql_query("select * from tb_harga where id_dealer ='$idd'");
+										while ($br=mysql_fetch_array($qw)) {
+											# code...
+										
+										$query = mysql_query(" SELECT tb_kredit.*, tb_harga.harga_cash, tb_det_motor.nama_det_motor FROM tb_kredit 
+											INNER JOIN tb_harga ON tb_kredit.id_harga = tb_harga.id_harga 
+											INNER JOIN tb_det_motor ON tb_det_motor.id_det_motor= tb_harga.id_det_motor 
+											WHERE tb_kredit.id_harga = $br[id_harga] AND tb_kredit.status = 7  Order BY tb_kredit.tgl_pengajuan DESC ");
+										$i = 1;
+										while($baris = mysql_fetch_array($query)){
+											$tgl = date("d F Y", strtotime($baris['tgl_pengajuan']));
+											$hrg=number_format($baris['harga_cash'], 0, ".", ".");
+											echo "<tr>
+													<td align='center'>$i</td>
+												<td><div>No.Kredit:<a href=# style='color: #b30143;'>$baris[id_kredit]</a></div>$tgl</td>
+												<td>$baris[nama_det_motor]</td>
+												<td>$hrg</td>
+												<td>Belum Dikirim</td>
+												<td>
+						
+													<a class='btn btn-success' href='konfirmasi-kirim2.php?id=$baris[id_kredit]'>Konfirmasi</a>
+													<a class='btn btn-info' href='proses-delete-harga.php?id=$baris[id_kredit]' >View</a>
 												</td>																		
 													</tr>";
 											$i++;

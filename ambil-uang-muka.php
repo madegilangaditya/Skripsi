@@ -10,6 +10,7 @@
 	//$_SESSION['umuka']=$umuka;
 	$bjns = $_GET['bjns'];
 ?>
+
 <?php
 	if ($bjns=="") {
 		# code...

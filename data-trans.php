@@ -24,8 +24,15 @@
 		<div class="cart" style="background: #f8f8f8;">
 			<div class="container" style="background: #ffffff;">
 				<div class="col-md-12 cart-items">
-					<div class="col-md-12 cart-items" style="margin-bottom: 1em;" id="results">
-					
+					<div class="col-md-12 cart-items" style="margin-bottom: 1em;">
+						<h2 style="display: inline;">Riwayat Transaksi</h2>
+						<select name="tjns" id="tjns" class="form-control" style="float:right; width: 25%; display: inline;">
+							<option value=1>Transaksi Cash</option>
+							<option value=2>Transaksi Kredit</option>
+						</select>
+						<div class="col-md-12" id="results">
+							
+						</div>
 					</div>
 					
 				</div>
@@ -50,7 +57,7 @@
 
 	</body>
 </html>
-<script>
+<!-- <script>
 	$(document).ready(function(){
 		
 		$(document).on('click', '#getUser', function(e){
@@ -83,7 +90,7 @@
 		
 	});
 
-</script>
+</script> -->
 
 <script type="text/javascript"> 
 	var htmlobjek;
@@ -113,11 +120,30 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#results" ).load( "riwayat.php");
-		
+
 		$("#results").on( "click", ".pagination a", function (e){
-			e.preventDefault();
-			var page = $(this).attr("data-page");
-			$("#results").load("riwayat.php",{"page":page}, function(){});
+					e.preventDefault();
+					var page = $(this).attr("data-page");
+					$("#results").load("riwayat.php",{"page":page}, function(){});
+				});
+		$("#tjns").change(function(){
+			var tjns = $("#tjns").val();
+			console.log(tjns)
+			if (tjns==1) {
+				$("#results" ).load( "riwayat.php");
+				$("#results").on( "click", ".pagination a", function (e){
+					e.preventDefault();
+					var page = $(this).attr("data-page");
+					$("#results").load("riwayat.php",{"page":page}, function(){});
+				});
+			}else if (tjns==2) {
+				$("#results" ).load( "get-riwayat.php");
+				$("#results").on( "click", ".pagination a", function (e){
+					e.preventDefault();
+					var page = $(this).attr("data-page");
+					$("#results").load("get-riwayat.php",{"page":page}, function(){});
+				});
+			}
 		});
 	});
 </script>
