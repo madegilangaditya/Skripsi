@@ -1,21 +1,34 @@
 <?php	 
 	include 'adminpage/koneksi.php';
 		$id = $_REQUEST['id'];
-		$sel =mysql_query("select * from tb_kredit where id_kredit=$id");
-		$br=mysql_fetch_assoc($sel);
-		$idt=$br['id_kredit'];
-		$tgl=$br['tgl_pengajuan'];
-		$umuka=$br['uang_muka'];
+		$st=$_REQUEST['st'];
+		if ($st==1) {
+			$sel =mysql_query("select * from tb_det_angsuran where id_det_angsuran=$id");
+			$br=mysql_fetch_assoc($sel);
+			$idt=$br['id_det_angsuran'];
+			$tgl=$br['tgl_jatuh_tempo'];
+			$ang=$br['angsuran'];
+			$dnd=$br['denda'];
+			$umuka=$ang+$dnd;
+		}else{
+
+			$sel =mysql_query("select * from tb_kredit where id_kredit=$id");
+			$br=mysql_fetch_assoc($sel);
+			$idt=$br['id_kredit'];
+			$tgl=$br['tgl_pengajuan'];
+			$umuka=$br['uang_muka'];
+		}
 ?>
 	<div class="modal-header"> 
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
-        <h2 class="modal-title">Pembayaran Uang Muka</h2>
-        <small style="float: right;"> No Kredit:  <span><?php echo"".$idt; ?></span></small>
+        <h2 class="modal-title"><?php if ($st==1) {echo "Pembayaran Cicilan";}else{echo "Pembayaran Uang Muka";} ?></h2>
+        <small style="float: right;"><?php if ($st==1) {echo "No Pembayaran:";}else{echo "No Kredit:";} ?> <span><?php echo"".$idt; ?></span></small>
         <h5 class="modal-title"><?php echo "$tgl" ; ?></h5> 
     </div> 
     <form action="proses-byr.php" method="post" enctype="multipart/form-data">
 		<div class="modal-body">
-			<input type="hidden" name="idt" value="<?php echo "".$idt; ?>"> 
+			<input type="hidden" name="idt" value="<?php echo "".$idt; ?>">
+			<input type="hidden" name="st" value="<?php echo "".$st; ?>"> 
 			<div id="modal-loader" style="display: none; text-align: center;">
 				<img src="ajax-loader.gif">
 			</div>

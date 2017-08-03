@@ -2,6 +2,20 @@
 	session_start();
 	error_reporting(E_ERROR|E_PARSE);
 	include "adminpage/koneksi.php";
+	require 'adminpage/PHPMailer/PHPMailerAutoload.php';
+
+	$mail = new PHPMailer;
+
+	$mail->isSMTP();                            // Set mailer to use SMTP
+	$mail->Host = 'smtp.gmail.com';             // Specify main and backup SMTP servers
+	$mail->SMTPAuth = true;                     // Enable SMTP authentication
+	$mail->Username = 'dealermotor32@gmail.com';          // SMTP username
+	$mail->Password = 'fuckingmyass'; 			// SMTP password
+	$mail->SMTPSecure = 'tls';                  // Enable TLS encryption, `ssl` also accepted
+	$mail->Port = 587;                          // TCP port to connect to
+
+	
+
 	$nama=$_POST['nama'];
 	$ktp=$_POST['ktp'];
 	$kelamin=$_POST['kelamin'];
@@ -20,10 +34,12 @@
 		$sel= mysql_query("select * from tb_pelanggan where id_login=$idl AND id_pelanggan= (select MAX(id_pelanggan) from tb_pelanggan)");
 		$bar = mysql_fetch_array($sel);
 		$tes=$bar['id_pelanggan'];
+		$email=$bar['email'];
 	}else{
 		$sel= mysql_query("SELECT MIN(id_pelanggan)AS id FROM tb_pelanggan WHERE id_login='$idl' ");
 		$bar = mysql_fetch_array($sel);
 		$tes=$bar['id'];
+		$email=$bar['email'];
 	}
 		$sql1=mysql_query("select sum(tb_cart.jumlah), tb_cart.id_harga, tb_cart.tanggal, tb_harga.harga_cash,tb_harga.id_det_motor, tb_det_motor.nama_det_motor, tb_det_motor.gambar, tb_dealer.nama_dealer from tb_cart 
 				 		left join tb_harga on tb_harga.id_harga = tb_cart.id_harga 
@@ -46,6 +62,23 @@
 						
 				}
 					$query=mysql_query("delete from tb_cart where id_login=$idl");
-					header('Location:next-order.php');
+					//header('Location:next-order.php');
 
+	$mail->setFrom('dealermotor32@gmail.com', 'Dealer');
+	$mail->addReplyTo('dealermotor32@gmail.com', 'Dealer');
+	$mail->addAddress('madegilangaditya32@gmail.com');   // Add a recipient
+	
+	$mail->isHTML(true);  // Set email format to HTML
+
+	$bodyContent = file_get_contents('adminpage/transactional-email/templates/billing.php');
+		
+
+	$mail->Subject = 'Invoice Pembayaran';
+	$mail->Body    = $bodyContent;
+
+	if(!$mail->send()) {
+    	header('Location:next-order.php');
+	} else {
+	    header('Location:next-order.php');
+	}
 ?>

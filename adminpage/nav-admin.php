@@ -54,7 +54,7 @@
 
 					   </ul>
                     </li>
-                        <li>
+                    <li>
                         <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Data User</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
 						<li><a href="admin.php?page=data-admin" class=" hvr-bounce-to-right"> <i class="fa fa-user nav_icon"></i>Data Admin</a></li>
@@ -66,6 +66,18 @@
 						<li><a href="admin.php?page=data-pelanggan" class=" hvr-bounce-to-right"><i class="fa fa-user nav_icon"></i>Data Pelanggan</a></li>
 
 					   </ul>
+                    </li>
+                    <li>
+                        <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-money   nav_icon"></i> <span class="nav-label">Laporan Penjualan</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="admin.php?page=penjualan-cash" class=" hvr-bounce-to-right"> <i class="fa fa-motorcycle nav_icon"></i>Penjualan Cash</a>
+                            </li>
+                            
+                            <li>
+                                <a href="admin.php?page=penjualan-kredit" class=" hvr-bounce-to-right"> <i class="fa fa-motorcycle nav_icon"></i>Penjualan Kredit</a>
+                            </li>
+                       </ul>
                     </li>
                 </ul>
             </div>

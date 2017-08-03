@@ -1,9 +1,10 @@
 <?php
-$user = $_SESSION['user'];
-$sel = mysql_query("select id_login from tb_login where username = '$user'");
-$br = mysql_fetch_array($sel);
-$sql = mysql_query("select id_dealer from tb_dealer where id_login = $br[id_login]");
-$br1 = mysql_fetch_array($sql);
+    $user = $_SESSION['user'];
+    $sel = mysql_query("select id_login from tb_login where username = '$user'");
+    $br = mysql_fetch_array($sel);
+    $sql = mysql_query("select id_dealer from tb_dealer where id_login = $br[id_login]");
+    $br1 = mysql_fetch_array($sql);
+    $_SESSION['idd']=$br1['id_dealer'];
  ?>
  <nav class="navbar-default navbar-static-top" role="navigation">
              <div class="navbar-header">
@@ -13,7 +14,7 @@ $br1 = mysql_fetch_array($sql);
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-               <h1> <a class="navbar-brand" href="index.html">DEMO</a></h1>         
+               <h1> <a class="navbar-brand" href="index.html">Dealer</a></h1>         
 			   </div>
 			 <div class=" border-bottom">
         	<div class="full-left">
@@ -54,7 +55,7 @@ $br1 = mysql_fetch_array($sql);
                         <a href="admin.php?page=data-harga" class=" hvr-bounce-to-right"><i class="fa fa-motorcycle nav_icon"></i> <span class="nav-label">Data Motor</span></a>
                     </li>
                         <li>
-                        <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Data Penjualan</span></a>
+                        <a href="admin.php?page=penjualan-cash" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Data Penjualan</span></a>
                         
 					   
                     </li>

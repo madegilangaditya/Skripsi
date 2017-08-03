@@ -67,16 +67,18 @@ if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SER
 					<td>Rp <?php echo $hrg; ?></td>
 					<td>Rp <?php echo $ang; ?></td>
 					<td><?php echo $bar['jangka_waktu'] ?> Bulan</td>
-					<?php if ($bar['status']==1 || $bar['status']==6) {
+					<?php if ($bar['status']==1) {
 							echo "<td style='color: #eea236; font-weight: bold;'>Belum Disurvey</td>";
 							} else if ($bar['status']==2) {
 								echo "<td style='font-weight: bold;'>Menunggu Konfirmasi</td>";
-							}else if ($bar['status']==3) {
+							}else if ($bar['status']==3 || $bar['status']==6) {
 								echo "<td style='color: #5bc0de; font-weight: bold;'>Diterima</td>";
 							}else if ($bar['status']==4) {
 								echo "<td style='color: #d2322d; font-weight: bold;'>Ditolak</td>";
 							}else if ($bar['status']==5) {
 								echo "<td style='color: #5cb85c; font-weight: bold;'>Lunas</td>";
+							}else if ($bar['status']==7){
+								echo "<td style='color: #5cb85c; font-weight: bold;'>Pengiriman Motor</td>";
 							}
 						?>
 					<td>

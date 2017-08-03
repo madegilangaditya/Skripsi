@@ -13,7 +13,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-               <h1> <a class="navbar-brand" href="admin.php">DEMO</a></h1> 
+               <h1> <a class="navbar-brand" href="admin.php">Finance</a></h1> 
 				
 			   </div>
 			 <div class=" border-bottom">
@@ -55,12 +55,20 @@
                     </li>
 
                     <li>
-                        <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Data Kredit</span></a> 
+                        <a href="admin.php?page=data-surveyor" class=" hvr-bounce-to-right"><i class="fa fa-user nav_icon"></i> <span class="nav-label">Data Surveyor</span></a>
                     </li>
 
                     <li>
-                        <a href="admin.php?page=data-surveyor" class=" hvr-bounce-to-right"><i class="fa fa-user nav_icon"></i> <span class="nav-label">Data Surveyor</span></a>
+                        <a href="#" class=" hvr-bounce-to-right"><i class="fa fa-money nav_icon"></i><span class="nav-label">Data Kredit</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="admin.php?page=penjualan-kredit&pg=1" class=" hvr-bounce-to-right"> <i class="fa fa-motorcycle nav_icon"></i>Laporan Kredit</a></li>
+
+                            <li><a href="admin.php?page=penjualan-kredit&pg=2" class=" hvr-bounce-to-right"> <i class="fa fa-motorcycle nav_icon"></i>Laporan Kredit Berjalan</a></li>
+                            
+                            <li><a href="admin.php?page=penjualan-kredit&pg=3" class=" hvr-bounce-to-right"><i class="fa fa-motorcycle nav_icon"></i>Laporan Kredit Ditolak</a></li>
+                       </ul>
                     </li>
+                
                 </ul>
             </div>
 			</div>

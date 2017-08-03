@@ -67,6 +67,7 @@
 								$no = 1+$page_position;
 								while($bar=mysql_fetch_array($result)) { 
 									$tgl = date("d F Y H:i:s", strtotime($bar['tgl_jatuh_tempo']));
+									
 									$hrg=number_format($bar['angsuran'], 0, ".", ".");
 							?>
 							<tbody>
@@ -86,14 +87,23 @@
 									</td>
 									<?php 
 											if ($bar['status']==2) {
-												echo "<td style='color: #eea236;     font-weight: bold;'>Belum Dibayar</td>";
-											} else{
-												echo "<td style='color: #5cb85c;     font-weight: bold;'>Sudah Dibayar</td>";
+												echo "<td style='color: #eea236;     font-weight: bold;'>Belum Dibayar</td>
+												<td>
+													<a class='btn btn-info' href='#' data-toggle='modal' data-target='#view-modal' data-id='$bar[id_det_angsuran];' id='byr'>Bayar </a>
+												</td>";
+											} else if($bar['status']==1){
+												echo "<td style='color: #5cb85c;     font-weight: bold;'>Sudah Dibayar</td>
+												<td>
+													<a class='btn btn-success'>Lunas</a>
+												</td>";
+											}else{
+												echo "<td style='color: #000000;     font-weight: bold;'>Menunggu Konfirmasi</td>
+												<td>
+													<a class='btn btn-success'>Pending</a>
+												</td>";
 											}
 										?>
-									<td>
-										<a class='btn btn-info' href='pembayaran.php?id=<?php echo $bar[id_angsuran];?>'>Bayar</a>
-									</td>
+									
 								</tr>
 							</tbody>
 							<?php $no++;} ?> 
@@ -122,3 +132,38 @@
 
 	</body>
 </html>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		$(document).on('click', '#byr', function(e){
+			
+			e.preventDefault();
+			var st = 1;
+			var uid = $(this).data('id');   // it will get id of clicked row
+			
+			$('#dynamic-content').html(''); // leave it blank before ajax call
+			$('#modal-loader').show();      // load ajax loader
+			
+			$.ajax({
+				url: 'byr.php',
+				type: 'POST',
+				data: 'id='+uid+'&st='+st,
+				dataType: 'html'
+			})
+			.done(function(data){
+				console.log(data);
+				console.log(uid);	
+				$('#dynamic-content').html('');    
+				$('#dynamic-content').html(data); // load response 
+				$('#modal-loader').hide();		  // hide ajax loader	
+			})
+			.fail(function(){
+				$('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
+				$('#modal-loader').hide();
+			});
+			
+		});
+		
+	});
+</script>

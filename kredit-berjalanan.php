@@ -42,6 +42,7 @@
 						      		<th>No</th>
 							        <th>Detail Kredit</th>
 							        <th>Angsuran Pokok</th>
+							        <th>Jenis</th>
 							        <th>Status</th>
 							        <th>Action</th>
 						      	</tr>
@@ -65,8 +66,33 @@
 								while($bar=mysql_fetch_array($result)) { 
 									$tgl = date("d F Y H:i:s", strtotime($bar['tgl_pengajuan']));
 									$hrg=number_format($bar['angsuran_pokok'], 0, ".", ".");
+									$idan= $bar['id_angsuran'];
+									$sel1=mysql_query("SELECT tb_det_angsuran.*, tb_kredit.*, tb_bunga.* FROM tb_det_angsuran
+										INNER JOIN tb_angsuran ON tb_det_angsuran.id_angsuran=tb_angsuran.`id_angsuran`
+										INNER JOIN tb_survey ON tb_survey.id_survey=tb_angsuran.`id_survey`
+										INNER JOIN tb_kredit ON tb_survey.id_kredit=tb_kredit.`id_kredit`
+										INNER JOIN tb_jawu ON tb_kredit.`id_jawu`=tb_jawu.`id_jawu`
+										INNER JOIN tb_bunga ON tb_bunga.`id_bunga`=tb_jawu.`id_bunga`
+										WHERE tb_det_angsuran.id_angsuran='$idan'");
+
 							?>
 							<tbody>
+							<?php
+								while ($br=mysql_fetch_array($sel1)) {
+										# code...
+										if ($br['tgl_jatuh_tempo']<$tanggal&&$br['status']==2) {
+
+											$datetime1 = date_create($br['tgl_jatuh_tempo']);
+											$datetime2 = date_create($tanggal);
+											$interval = date_diff($datetime1, $datetime2);
+											$a=$interval->d;
+											$dd=$a*$br['denda_tetap'];
+											$dnd=$dd/100*$br['angsuran'];
+											$upd =mysql_query("update tb_det_angsuran set denda='$dnd' where id_det_angsuran=$br[id_det_angsuran]");
+											
+										}
+									}
+							?>
 								<tr>
 									<td><?php echo $no; ?></td>
 									<td>
@@ -85,12 +111,17 @@
 												echo "<td style='font-weight: bold;'>Pending</td>";
 											}
 										?>
-										
+									<td><?php if ($bar['jenis']==1) {
+										# code...
+										echo "Bunga Tetap";
+										}else{
+											echo "Bunga Menurun";
+											} ?></td>	
 									
 									<td style="width: 299px;">
 										<?php
 											if ($bar['status']==6||$bar['status']==7) {
-												$by = mysql_query("select id_bayar from tb_bayar where id_kredit=$bar[id_kredit]");
+												$by = mysql_query("select id_bayar from tb_bayar where id=$bar[id_kredit]");
 												if (mysql_num_rows($by)==0) {
 										?>
 												<a class='btn btn-success' href='#' data-toggle='modal' data-target='#view-modal' data-id='<?php echo $bar[id_kredit]; ?>' id='byr'>Bayar Uang Muka</a>
