@@ -8,7 +8,6 @@
 	$tanggal=date("Y-m-d H:i:s");
 
 	$id = $_GET['id'];
-	$upd = mysql_query("update tb_kredit set status=3 where id_kredit='$id'");
-	$ins = mysql_query("insert into tb_bpkb (id_kredit, tgl_kirim) values ('$id','$tanggal')");
-	header('Location:admin.php');
+	$upd = mysql_query("update tb_bpkb set tgl_konfirmasi='$tanggal' where id_bpkb='$id'");
+	header('Location:admin.php?page=data-bpkb');
 ?>

@@ -71,7 +71,19 @@ if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SER
 							}
 						?>
 						<th>Jenis</th>
-						<!-- <th>Status</th> -->				
+						<!-- <th>Status</th> -->
+						<?php
+							if ($pg==1) {
+								echo "<th>Status</th>";
+								# code...
+							}
+						?>			
+						<?php
+							if ($idf!=0) {
+								echo "<th>Action</th>";
+								# code...
+							}
+						?>				
 					</tr>
 				</thead>
 				
@@ -123,7 +135,18 @@ if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SER
 						inner join tb_finance on tb_bunga.id_finance=tb_finance.id_finance
 						left join tb_surveyor on tb_surveyor.id_surveyor=tb_kredit.id_surveyor
 						WHERE MONTH(tgl_pengajuan)='$bln' AND YEAR(tgl_pengajuan)='$thn' and tb_finance.id_finance='$idf' and tb_kredit.status=4");
-					 } 
+					 } else if ($pg==4) {
+					 	$result = mysql_query("SELECT tb_kredit.*, tb_pelanggan.*, tb_harga.*, tb_det_motor.nama_det_motor, tb_dealer.nama_dealer, tb_surveyor.nama_surveyor, tb_finance.* FROM tb_kredit
+						inner join tb_pelanggan on tb_kredit.id_pelanggan = tb_pelanggan.id_pelanggan
+						inner join tb_harga on tb_kredit.id_harga = tb_harga.id_harga
+						inner join tb_det_motor on tb_det_motor.id_det_motor = tb_harga.id_det_motor
+						inner join tb_dealer on tb_harga.id_dealer = tb_dealer.id_dealer
+						inner join tb_jawu on tb_jawu.id_jawu=tb_kredit.id_jawu
+						inner join tb_bunga on tb_jawu.id_bunga = tb_bunga.id_bunga
+						inner join tb_finance on tb_bunga.id_finance=tb_finance.id_finance
+						left join tb_surveyor on tb_surveyor.id_surveyor=tb_kredit.id_surveyor
+						WHERE MONTH(tgl_pengajuan)='$bln' AND YEAR(tgl_pengajuan)='$thn' and tb_finance.id_finance='$idf' and tb_kredit.status=5");
+					 }
 					$no = 1+$page_position;
 					while($bar=mysql_fetch_array($result)) { 
 						$tgl = date("d F Y H:i:s", strtotime($bar['tgl_pengajuan']));
@@ -152,12 +175,37 @@ if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SER
 							 	echo "<td>$bar[nama_surveyor]</td>";
 							 }
 						?>
-						<td><?php if ($bar['jenis']==1) {
-							echo "Bunga Tetap";
-						}else{
-							echo "Bunga Menurun";
-						}?></td>
-						
+						<td>
+							<?php 
+								if ($bar['jenis']==1) {
+									echo "Bunga Tetap";
+								}else{
+									echo "Bunga Menurun";
+								}
+							?>							
+						</td>
+
+							<?php 
+								if ($pg==1 && $bar['status']==5) {
+									echo "<td style='color:#449d44;'>Lunas</td>";
+								}else if($pg==1 && $bar['status']==4){
+									echo "<td style='color:#eea236;'>Ditolak</td>";
+								}else if($pg==1 && $bar['status']!=5){
+									echo "<td style='color:#31b0d5;'>Aktif</td>";
+								}
+							?>
+							
+						</td>
+
+						<?php 
+							if ($idf!=0 && $bar['status']!=4) {
+							 	# code...
+							 	echo "<td><a class='btn btn-info' href='#' data-toggle='modal' data-target='#view-modal' data-id='$bar[id_kredit]' id='getang'>Riwayat</a></td>"; 
+							 }else if ($idf!=0 && $bar['status']==4) {
+							 	# code...
+							 	echo "<td><a class='btn btn-info' href='#' data-toggle='modal' data-target='#view-modal' data-id='$bar[id_kredit]' id='getang'>View</a></td>";
+							 }
+						?>
 
 						
 					</tr>
@@ -194,7 +242,42 @@ if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SER
 			$('#modal-loader').show();      // load ajax loader
 			
 			$.ajax({
-				url: 'get-trans.php',
+				url: 'get-kredit.php',
+				type: 'POST',
+				data: 'id='+uid,
+				dataType: 'html'
+			})
+			.done(function(data){
+				console.log(data);	
+				$('#dynamic-content').html('');    
+				$('#dynamic-content').html(data); // load response 
+				$('#modal-loader').hide();		  // hide ajax loader	
+			})
+			.fail(function(){
+				$('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
+				$('#modal-loader').hide();
+			});
+			
+		});
+		
+	});
+
+</script>
+
+<script>
+	$(document).ready(function(){
+		
+		$(document).on('click', '#getang', function(e){
+			
+			e.preventDefault();
+			
+			var uid = $(this).data('id');   // it will get id of clicked row
+			
+			$('#dynamic-content').html(''); // leave it blank before ajax call
+			$('#modal-loader').show();      // load ajax loader
+			
+			$.ajax({
+				url: 'get-angsuran.php',
 				type: 'POST',
 				data: 'id='+uid,
 				dataType: 'html'

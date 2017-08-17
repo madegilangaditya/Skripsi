@@ -63,6 +63,9 @@
 				<label class="control-label">Foto Struk Pembayaran:</label>
 	            <input type="file" name="byr" >
 	            <p class="help-block">Foto Struk Pembayaran</p>
+
+	            <label class="control-label">Total Bayar:</label>
+	            <input type="number" name="ttl" placeholder="Total Bayar" class="form-control" style="width: 35%;">
 		</div> 
 	    <div class="modal-footer">
 	    	<button type="submit" class="btn btn-success">Bayar</button>	

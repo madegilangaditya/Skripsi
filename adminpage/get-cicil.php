@@ -3,12 +3,15 @@
 		$id = $_REQUEST['id'];
 		//$st=$_REQUEST['st'];
 		
-			$sel =mysql_query("select * from tb_det_angsuran where id_det_angsuran=$id");
+			$sel =mysql_query("select tb_det_angsuran.*, tb_bayar.total_byr from tb_det_angsuran 
+				inner join tb_bayar on tb_bayar.id=tb_det_angsuran.id_det_angsuran
+				where id_det_angsuran=$id");
 			$br=mysql_fetch_assoc($sel);
 			$idt=$br['id_det_angsuran'];
 			$tgl=$br['tgl_jatuh_tempo'];
 			$ang=$br['angsuran'];
 			$dnd=$br['denda'];
+			$ttl = $br['total_byr'];
 			$umuka=$ang+$dnd;
 			$sl=mysql_query("select * from tb_bayar where id=$idt and jenis=1");
 			$bar=mysql_fetch_array($sl);
@@ -26,14 +29,16 @@
 			<div id="modal-loader" style="display: none; text-align: center;">
 				<img src="ajax-loader.gif">
 			</div>
-				<div class="cart-items" style="text-align: center;">
-					<p>Jumlah Tagihan :</p>  	
-				  	<h2>Rp <?php echo number_format($umuka);?></h2>
-					
-				</div>
-				<label class="control-label">Foto Struk Pembayaran:</label>
-				<br><img src="../<?php echo"$bar[gmb_struk]"; ?>" width="300">
-	            
+			<div class="cart-items" style="text-align: center;">
+				<p>Jumlah Tagihan :</p>  	
+			  	<h2>Rp <?php echo number_format($umuka);?></h2>
+				
+			</div>
+			<label class="control-label">Foto Struk Pembayaran:</label>
+			<br><img src="../<?php echo"$bar[gmb_struk]"; ?>" width="300"><br>
+
+            <label class="control-label">Total Bayar:</label>
+			<input type="number" name="ttl" placeholder="Total Bayar" class="form-control" style="width: 35%;" disabled value="<?php echo "$ttl"; ?>">
 		</div> 
 	    <div class="modal-footer">
 	    	<button type="submit" class="btn btn-success">Konfirmasi</button>	

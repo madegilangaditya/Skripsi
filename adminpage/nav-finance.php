@@ -66,9 +66,15 @@
                             <li><a href="admin.php?page=penjualan-kredit&pg=2" class=" hvr-bounce-to-right"> <i class="fa fa-motorcycle nav_icon"></i>Laporan Kredit Berjalan</a></li>
                             
                             <li><a href="admin.php?page=penjualan-kredit&pg=3" class=" hvr-bounce-to-right"><i class="fa fa-motorcycle nav_icon"></i>Laporan Kredit Ditolak</a></li>
+
+                            <li><a href="admin.php?page=penjualan-kredit&pg=4" class=" hvr-bounce-to-right"><i class="fa fa-motorcycle nav_icon"></i>Laporan Kredit Lunas</a></li>
                        </ul>
                     </li>
-                
+                    
+                    <li>
+                        <a href="admin.php?page=data-bpkb" class=" hvr-bounce-to-right"><i class="fa fa-file nav_icon"></i> <span class="nav-label">Penyerahan BPKB</span></a>
+                    </li>
+
                 </ul>
             </div>
 			</div>

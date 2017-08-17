@@ -36,6 +36,8 @@
 								echo '<h2 style="display: inline; padding-bottom: 3em;">Laporan Kredit Berjalan</h2>';
 							}else if ($pg==3){
 								echo '<h2 style="display: inline; padding-bottom: 3em;">Laporan Kredit Ditolak</h2>';
+							}else if ($pg==4) {
+								echo '<h2 style="display: inline; padding-bottom: 3em;">Laporan Kredit Lunas</h2>';
 							}else{
 								echo '<h2 style="display: inline; padding-bottom: 3em;">Laporan Penjualan Kredit</h2>';
 							}

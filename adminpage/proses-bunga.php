@@ -12,7 +12,7 @@ $biaya = $_POST['biaya'];
 /*for ($i=0; $i < count($bulan) ; $i++) { 
 	
 }*/
-	$sel = mysql_query("select id_bunga, jangka_waktu from tb_bunga where id_finance='$idf'");
+	$sel = mysql_query("select id_bunga from tb_bunga where id_finance='$idf'");
 	$br = mysql_fetch_array($sel);
 	$idb = $br['id_bunga'];
 	if (mysql_num_rows($sel)==0) {

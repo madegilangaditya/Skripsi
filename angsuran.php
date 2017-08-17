@@ -126,7 +126,7 @@ include "head.php";
 				</div>						
 			</div>
 
-			<div class="single-bottom2">
+			<div class="single-bottom2" id="hsll">
 
 				<h6 style="font-weight: 600";>Harga Angsuran (Bulan)</h6>
 				<select name="bjns" id="bjns" class="form-control" style="margin-top: 2em; width: 25%;">
@@ -242,6 +242,9 @@ var htmlobjek;
           });
         });
 </script>
+
+
+
 </body>
 </html>
 

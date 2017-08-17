@@ -1,5 +1,6 @@
 <?php
 	session_start();
+	error_reporting(E_ERROR|E_PARSE);
 	include "adminpage/koneksi.php";
 	$user=$_SESSION['username'];
 		if($user==""){
@@ -8,7 +9,7 @@
 		}
 	$idw = $_POST['warna'];
 	$idh = $_SESSION['hrg'];
-	$bjns = $_POST['jns'];
+	$bjns = $_POST['bjns'];
 	$_SESSION['warna']=$idw;
 	$umuka = $_POST['umuka'];
 	$_SESSION['umuka']=$umuka;
@@ -241,8 +242,10 @@
 									echo number_format(doubleval($bia)); ?></span></span>
 									<span style="width: 45%;">Uang Muka</span>
 									<span>Rp <span class="total" style="text-align: right;"><?php
-									echo"-";
+									
 									echo number_format(doubleval($umuka)); ?></span></span>
+									<span style="width: 45%;">Bunga</span>
+									<span><span class="total" style="text-align: right;"><?php if ($bjns==1) {echo "$butap";}else{echo "$burun";} ?>%</span></span>
 									<!-- <span style="width: 45%;">Angsuran Pokok</span>
 									<span>Rp <span class="total" style="text-align: right;"><?php 
 									echo number_format(doubleval($tot)); ?></span></span>
@@ -309,7 +312,7 @@
 	                </div>
 	                <div class="col-md-6 cart-items">
 		            	<div class="form-group" >
-							<h4 class="last-price" style="width: 40%;">Angsuran Pokok</h4>
+							<h4 class="last-price" style="width: 40%;">Cicilan Pokok</h4>
 							<span class="total final" name="total" style="width: 60%; text-align: right;">Rp <?php echo number_format($tot); ?></span>
 							
 				 			<div class="clearfix"></div>

@@ -46,8 +46,12 @@
 						    	<tr>
 						      		<th>No</th>
 							        <th>Jatuh Tempo</th>
-							        <th>Angsuran</th>
-							        <th>Denda</th>
+							        <th>Angsuran Bunga</th>
+							        <th>Angsuran Pokok</th>
+							        <th>Angsuran Total</th>
+							        <!-- <th>Denda</th> -->
+							        <th>Cicilan Pokok</th>
+							        <th>Total Bunga</th>
 							        <th>Status</th>
 							        <th>Action</th>
 						      	</tr>
@@ -61,14 +65,35 @@
 								//echo "tes $idp";
 								
 								//echo "tes $get_total_rows, $total_pages, $page_position";
-								$result = mysql_query("SELECT tb_det_angsuran.*, tb_angsuran.* FROM tb_det_angsuran
-									INNER JOIN tb_angsuran ON tb_det_angsuran.id_angsuran=tb_angsuran.id_angsuran
-									WHERE tb_det_angsuran.id_angsuran=$id ORDER BY tgl_jatuh_tempo ASC");
+								$result = mysql_query("SELECT tb_det_angsuran.*, tb_angsuran.jenis, tb_kredit.angsuran_pokok, tb_kredit.id_kredit, tb_jawu.`jangka_waktu`, tb_bunga.bunga_menurun FROM tb_det_angsuran 
+									INNER JOIN tb_angsuran ON tb_det_angsuran.id_angsuran=tb_angsuran.id_angsuran 
+									INNER JOIN tb_survey ON tb_survey.`id_survey`=tb_angsuran.`id_survey`
+									INNER JOIN tb_kredit ON tb_kredit.`id_kredit`=tb_survey.`id_kredit`
+									INNER JOIN tb_jawu ON tb_jawu.`id_jawu`=tb_kredit.`id_jawu` 
+									INNER JOIN tb_bunga ON tb_bunga.`id_bunga`=tb_jawu.`id_bunga` 
+									WHERE tb_det_angsuran.id_angsuran='$id'");
 								$no = 1+$page_position;
 								while($bar=mysql_fetch_array($result)) { 
 									$tgl = date("d F Y H:i:s", strtotime($bar['tgl_jatuh_tempo']));
+									$ang=$bar['angsuran'];
+									$angpok = $bar['angsuran_pokok'];
+									$burun = $bar['bunga_menurun'];
+									$jawu = $bar['jangka_waktu'];
+									$ang_tmp=round($angpok/$jawu);
+									if ($bar['jenis']==1) {
+										$angbung = $ang-$ang_tmp;
+										$btot+=$angbung;
+									}else{
+										$angbung = round($bar['sisa_pokok']*$burun/100);
+										//$angtot = $ag+$ang_tmp;
+										$btot+=$angbung;
+									}
 									
+									
+									
+								
 									$hrg=number_format($bar['angsuran'], 0, ".", ".");
+									$hrgg=number_format($bar['sisa_pokok'], 0, ".", ".");
 							?>
 							<tbody>
 								<tr>
@@ -76,15 +101,19 @@
 									<td>
 										<?php echo $tgl; ?>
 									</td>
+									<td>Rp <?php echo number_format($angbung, 0, ".", "."); ?></td>
+									<td>Rp <?php echo number_format($ang_tmp, 0, ".", "."); ?></td>
 									<td>Rp <?php echo $hrg; ?></td>
-									<td><?php 
+									<!-- <td><?php 
 											if($bar['denda']==0) {
 												echo "-";
 											}else{
 												echo number_format($bar['denda'], 0, ".", ".");
 											} 
 										?>
-									</td>
+									</td> -->
+									<td>Rp <?php echo $hrgg; ?></td>
+									<td>Rp <?php echo number_format($btot, 0, ".", "."); ?></td>
 									<?php 
 											if ($bar['status']==2) {
 												echo "<td style='color: #eea236;     font-weight: bold;'>Belum Dibayar</td>
@@ -103,10 +132,35 @@
 												</td>";
 											}
 										?>
-									
+
 								</tr>
+								<?php
+									if ($jawu==$no) {
+								?>
+								<tr style="font-weight: bold;">
+									<td>Total</td>
+									<td>
+										-
+									</td>
+									<td>-</td>
+									<td>-</td>
+									<!-- <td>-
+									</td> -->
+									<td>0</td>
+									<td>-</td>
+									<td>Rp <?php echo number_format($btot, 0, ".", "."); ?></td>
+									<td>-</td>
+									<td><a class='btn btn-success'>Lunas</a></td>
+
+								</tr>
+								<?php			
+										}		
+								?>
+									
 							</tbody>
-							<?php $no++;} ?> 
+							<?php $no++;
+
+							} ?> 
 						</table>
 					</div>
 					

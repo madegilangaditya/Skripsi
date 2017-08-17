@@ -83,6 +83,17 @@
 						inner join tb_finance on tb_bunga.id_finance=tb_finance.id_finance
 						left join tb_surveyor on tb_surveyor.id_surveyor=tb_kredit.id_surveyor
 						WHERE MONTH(tgl_pengajuan)='$bln' AND YEAR(tgl_pengajuan)='$thn' and tb_finance.id_finance='$idf' and tb_kredit.status=4 and tb_kredit.id_surveyor='$srv'");
+		}else if ($srv!=0 && $pg==4) {
+			$result = mysql_query("SELECT tb_kredit.*, tb_pelanggan.*, tb_harga.*, tb_det_motor.nama_det_motor, tb_dealer.nama_dealer, tb_surveyor.nama_surveyor, tb_finance.* FROM tb_kredit
+						inner join tb_pelanggan on tb_kredit.id_pelanggan = tb_pelanggan.id_pelanggan
+						inner join tb_harga on tb_kredit.id_harga = tb_harga.id_harga
+						inner join tb_det_motor on tb_det_motor.id_det_motor = tb_harga.id_det_motor
+						inner join tb_dealer on tb_harga.id_dealer = tb_dealer.id_dealer
+						inner join tb_jawu on tb_jawu.id_jawu=tb_kredit.id_jawu
+						inner join tb_bunga on tb_jawu.id_bunga = tb_bunga.id_bunga
+						inner join tb_finance on tb_bunga.id_finance=tb_finance.id_finance
+						left join tb_surveyor on tb_surveyor.id_surveyor=tb_kredit.id_surveyor
+						WHERE MONTH(tgl_pengajuan)='$bln' AND YEAR(tgl_pengajuan)='$thn' and tb_finance.id_finance='$idf' and tb_kredit.status=5 and tb_kredit.id_surveyor='$srv'");
 		}
 
 	
@@ -110,7 +121,7 @@
 					}
 				?>
 				<th>Jenis</th>
-				<!-- <th>Status</th> -->				
+				<th>Action</th>				
 			</tr>
 		</thead>
 			<?php
@@ -142,6 +153,15 @@
 					echo "Bunga Menurun";
 				}?></td>
 				
+				<?php 
+					if ($idf!=0 && $bar['status']!=4) {
+					 	# code...
+					 	echo "<td><a class='btn btn-info' href='#' data-toggle='modal' data-target='#view-modal' data-id='$bar[id_kredit]' id='getang'>Riwayat</a></td>"; 
+					 }else if ($idf!=0 && $bar['status']==4) {
+					 	# code...
+					 	echo "<td><a class='btn btn-info' href='#' data-toggle='modal' data-target='#view-modal' data-id='$bar[id_kredit]' id='getang'>View</a></td>";
+					 }
+				?>				
 
 				
 			</tr>

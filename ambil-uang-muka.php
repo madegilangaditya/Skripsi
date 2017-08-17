@@ -7,9 +7,10 @@
 	$sql = mysql_query("select harga_cash from tb_harga where id_harga='$id'");
 	$b = mysql_fetch_array($sql);
 	$hrg = $b['harga_cash'];
-	//$_SESSION['umuka']=$umuka;
+	$_SESSION['umuka']=$umuka;
 	$bjns = $_GET['bjns'];
 ?>
+<input type="hidden" name="bjns" id="bjns" value="<?php echo $bjns; ?>">
 
 <?php
 	if ($bjns=="") {
@@ -44,7 +45,7 @@
 		?>
 		<tr>
 			<?php		
-				echo "<td>$jawu</td>";
+				echo "<td>$jawu <a href='komparef.php?jw=$jawu&um=$umuka' class='btn btn-info' style='display: inline; float: right;'' id='kom'>Kompare</a></td>";
 				$sel3= mysql_query("select tb_bunga.id_bunga, tb_bunga.id_finance, tb_jawu.id_jawu from tb_bunga inner join tb_jawu on tb_bunga.id_bunga=tb_jawu.id_bunga where tb_jawu.jangka_waktu='$jawu' group by tb_bunga.id_finance");
 
 				$jumjw = mysql_num_rows($sel3);
@@ -124,7 +125,7 @@
 		?>
 		<tr>
 			<?php		
-				echo "<td>$jawu</td>";
+				echo "<td>$jawu <a href='komparef.php?jw=$jawu&um=$umuka' class='btn btn-info' style='display: inline; float: right;'' id='kom'>Kompare</a></td>";
 				$sel3= mysql_query("select tb_bunga.id_bunga, tb_bunga.id_finance, tb_jawu.id_jawu from tb_bunga inner join tb_jawu on tb_bunga.id_bunga=tb_jawu.id_bunga where tb_jawu.jangka_waktu='$jawu' group by tb_bunga.id_finance");
 
 				$jumjw = mysql_num_rows($sel3);
@@ -204,7 +205,7 @@
 		?>
 		<tr>
 			<?php		
-				echo "<td>$jawu</td>";
+				echo "<td>$jawu <a href='komparef.php?jw=$jawu&um=$umuka' class='btn btn-info' style='display: inline; float: right;'' id='kom'>Kompare</a></td>";
 				$sel3= mysql_query("select tb_bunga.id_bunga, tb_bunga.id_finance, tb_jawu.id_jawu from tb_bunga inner join tb_jawu on tb_bunga.id_bunga=tb_jawu.id_bunga where tb_jawu.jangka_waktu='$jawu' group by tb_bunga.id_finance");
 
 				$jumjw = mysql_num_rows($sel3);
@@ -274,6 +275,34 @@
 		   </div>
 		</div>
 	<!-- /.modal -->
+
+<!-- <script type="text/javascript">      
+var htmlobjek;
+        $(document).ready(function(){
+          //apabila terjadi event onchange terhadap object <select id=provinsi>
+          $("#kom").click(function(){
+            var bjns = $("#bjns").val();
+            var umuka = $("#umuka").val();
+            //var session_value = '<%=Session["warna"]%>';
+
+            $.ajax({
+                url: "komparef.php",
+                data: "bjns="+bjns+"&umuka="+umuka,
+                cache: false,
+                success: function(msg){
+                    //jika data sukses diambil dari server kita tampilkan
+                    //di <select id=kota>
+                    // <%Session["warna"] = warna ;%>
+                    
+                    //document.getElementById("gmb2").src=msg;
+                    //$("#gmb1").html(msg);
+                    $("#hsll").html(msg);
+                  
+                }
+            });
+          });
+        });
+</script> -->
 
 <!--table class="table table-bordered">
 	<h3 style="text-align: center; margin: 1em;">Bunga Menurun</h3>

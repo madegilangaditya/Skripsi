@@ -101,6 +101,12 @@
 										</div><?php echo $tgl; ?>
 									</td>
 									<td>Rp <?php echo $hrg; ?></td>
+									<td><?php if ($bar['jenis']==1) {
+										# code...
+										echo "Bunga Tetap";
+										}else{
+											echo "Bunga Menurun";
+											} ?></td>	
 									<?php 
 											if ($bar['status']==3) {
 												echo "<td style='color: #eea236;     font-weight: bold;'>Aktif</td>";
@@ -111,18 +117,13 @@
 												echo "<td style='font-weight: bold;'>Pending</td>";
 											}
 										?>
-									<td><?php if ($bar['jenis']==1) {
-										# code...
-										echo "Bunga Tetap";
-										}else{
-											echo "Bunga Menurun";
-											} ?></td>	
+									
 									
 									<td style="width: 299px;">
 										<?php
 											if ($bar['status']==6||$bar['status']==7) {
 												$by = mysql_query("select id_bayar from tb_bayar where id=$bar[id_kredit]");
-												if (mysql_num_rows($by)==0) {
+												if ($bar['sts_umuka']==1) {
 										?>
 												<a class='btn btn-success' href='#' data-toggle='modal' data-target='#view-modal' data-id='<?php echo $bar[id_kredit]; ?>' id='byr'>Bayar Uang Muka</a>
 											<?php

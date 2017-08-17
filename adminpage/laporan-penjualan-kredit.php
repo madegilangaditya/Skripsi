@@ -44,6 +44,17 @@
 						inner join tb_finance on tb_bunga.id_finance=tb_finance.id_finance
 						left join tb_surveyor on tb_surveyor.id_surveyor=tb_kredit.id_surveyor
 						WHERE MONTH(tgl_pengajuan)='$bln' AND YEAR(tgl_pengajuan)='$thn' and tb_finance.id_finance='$idf' and tb_kredit.status=4");
+		}else if ($pg==4) {
+			$results = mysql_query("SELECT tb_kredit.*, tb_pelanggan.*, tb_harga.*, tb_det_motor.nama_det_motor, tb_dealer.nama_dealer, tb_surveyor.nama_surveyor, tb_finance.* FROM tb_kredit
+						inner join tb_pelanggan on tb_kredit.id_pelanggan = tb_pelanggan.id_pelanggan
+						inner join tb_harga on tb_kredit.id_harga = tb_harga.id_harga
+						inner join tb_det_motor on tb_det_motor.id_det_motor = tb_harga.id_det_motor
+						inner join tb_dealer on tb_harga.id_dealer = tb_dealer.id_dealer
+						inner join tb_jawu on tb_jawu.id_jawu=tb_kredit.id_jawu
+						inner join tb_bunga on tb_jawu.id_bunga = tb_bunga.id_bunga
+						inner join tb_finance on tb_bunga.id_finance=tb_finance.id_finance
+						left join tb_surveyor on tb_surveyor.id_surveyor=tb_kredit.id_surveyor
+						WHERE MONTH(tgl_pengajuan)='$bln' AND YEAR(tgl_pengajuan)='$thn' and tb_finance.id_finance='$idf' and tb_kredit.status=5");
 		}
 	
 	}else if ($srv!=0 && $pg==1) {
@@ -80,6 +91,17 @@
 						inner join tb_finance on tb_bunga.id_finance=tb_finance.id_finance
 						left join tb_surveyor on tb_surveyor.id_surveyor=tb_kredit.id_surveyor
 						WHERE MONTH(tgl_pengajuan)='$bln' AND YEAR(tgl_pengajuan)='$thn' and tb_finance.id_finance='$idf' and tb_kredit.status=4 and tb_kredit.id_surveyor='$srv'");
+		}else if ($srv!=0 && $pg==4) {
+			$results = mysql_query("SELECT tb_kredit.*, tb_pelanggan.*, tb_harga.*, tb_det_motor.nama_det_motor, tb_dealer.nama_dealer, tb_surveyor.nama_surveyor, tb_finance.* FROM tb_kredit
+						inner join tb_pelanggan on tb_kredit.id_pelanggan = tb_pelanggan.id_pelanggan
+						inner join tb_harga on tb_kredit.id_harga = tb_harga.id_harga
+						inner join tb_det_motor on tb_det_motor.id_det_motor = tb_harga.id_det_motor
+						inner join tb_dealer on tb_harga.id_dealer = tb_dealer.id_dealer
+						inner join tb_jawu on tb_jawu.id_jawu=tb_kredit.id_jawu
+						inner join tb_bunga on tb_jawu.id_bunga = tb_bunga.id_bunga
+						inner join tb_finance on tb_bunga.id_finance=tb_finance.id_finance
+						left join tb_surveyor on tb_surveyor.id_surveyor=tb_kredit.id_surveyor
+						WHERE MONTH(tgl_pengajuan)='$bln' AND YEAR(tgl_pengajuan)='$thn' and tb_finance.id_finance='$idf' and tb_kredit.status=5 and tb_kredit.id_surveyor='$srv'");
 		}
 	
 	$br=mysql_fetch_assoc($result);
@@ -119,7 +141,13 @@
 							}
 						?>
 						<th>Jenis</th>
-						<!-- <th>Status</th> -->				
+						<?php
+							if ($pg==1) {
+								echo "<th>Status</th>";
+								# code...
+							}
+						?>
+										
 					</tr>
 				</thead>
 				
@@ -159,6 +187,16 @@
 					}else{
 						echo "Bunga Menurun";
 					}?></td>
+
+					<?php 
+						if ($pg==1 && $bar['status']==5) {
+							echo "<td style='color:#449d44;'>Lunas</td>";
+						}else if($pg==1 && $bar['status']==4){
+							echo "<td style='color:#eea236;'>Ditolak</td>";
+						}else if($pg==1 && $bar['status']!=5){
+							echo "<td style='color:#31b0d5;'>Aktif</td>";
+						}
+					?>
 					</tr>
 				</tbody>
 				<?php $no++;} ?>

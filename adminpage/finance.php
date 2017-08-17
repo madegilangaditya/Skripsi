@@ -38,7 +38,7 @@
 			//echo $data['jml'];
 			?>
 			
-			<div class="col-md-4 ">
+			<!-- <div class="col-md-4 ">
 				<div class="content-top-1">
 				<div class="col-md-12 top-content">
 					<h5>Motor</h5>
@@ -70,6 +70,7 @@
 				 <div class="clearfix"> </div>
 				</div>
 			</div>
+			 -->
 			<div class="col-md-12" style="margin-top: 20px;">
 				<div class="grid-form1" id="results">
 				 	<h3 id="forms-example" class="" style="margin-bottom: 0px;">Survey Kredit Belum di Aprove</h3>

@@ -1,14 +1,14 @@
- <?php
- 
-include "koneksi.php";
-$user=$_SESSION['user'];
-$sel = mysql_query("Select id_login from tb_login where username='$user'");
-$bar= mysql_fetch_array($sel);
-$idl=$bar['id_login'];
-$sel1 = mysql_query("select * from tb_dealer where id_login=$idl");
-$bar1= mysql_fetch_array($sel1);
-$idd=$bar1['id_dealer'];
+<?php
+	include "koneksi.php";
+	$user=$_SESSION['user'];
+	$sel = mysql_query("Select id_login from tb_login where username='$user'");
+	$bar= mysql_fetch_array($sel);
+	$idl=$bar['id_login'];
+	$sel1 = mysql_query("select * from tb_dealer where id_login=$idl");
+	$bar1= mysql_fetch_array($sel1);
+	$idd=$bar1['id_dealer'];
 ?>
+
  <div id="page-wrapper" class="gray-bg dashbard-1">
        <div class="content-main">
 	   
@@ -114,12 +114,12 @@ $idd=$bar1['id_dealer'];
 						 <div class="col-md-12 form-group2 group-mail">
 			                <label for="selector1">Gratis Helm:</label>
 			                <div>
-	                      	<label class="radio-inline"><input type="radio" name="helm" value="1" >Dapat</label>
-							<label class="radio-inline"><input type="radio" name="helm" value="2" >Tidak Dapat</label>
+	                      	<label class="radio-inline"><input type="radio" name="helm" id="helm" value="1" >Dapat</label>
+							<label class="radio-inline"><input type="radio" name="helm" id="helm" value="2" >Tidak Dapat</label>
 						</div>
 						</div>
 			<div class="col-md-12 form-group">
-				<button class="btn-success btn" name="submit" style="margin-right: 5em;">Submit</button>
+				<button class="btn-success btn" name="submit" id="submit" style="margin-right: 5em;">Submit</button>
 				<button onclick="history.back();" type="button" class="btn-danger btn">Back</button>
 			</div>
 			<div class="clearfix"> </div>
@@ -138,7 +138,36 @@ $idd=$bar1['id_dealer'];
 	</div>
 		<!---->
 	
-  
+<!-- <script type="text/javascript">
+	$(document).ready(function(){
+		$("#submit").click(function(){
+			var id1 = $("#id").val();
+			var detmotor1 = $("#detmotor").val();
+			var hrg1 = $("#hrg").val();
+			var stok1 = $("#stok").val();
+			var srv1 = $("#srv").val();
+			var bpkb1 = $("#bpkb").val();
+			var helm1 = $("#helm").val();
+			$.post("proses-add-harga.php", {
+				id:id1,
+				detmotor:detmotor1,
+				hrg:hrg1,
+				stok:stok1,
+				srv:srv1,
+				bpkb:bpkb1,
+				helm:helm1
+			},
+			function(data){
+				if (data== 'Motor Sudah Ada') {
+					
+					alert("Motor Sudah ada");
+				}
+			});
+			
+			console.log(data);
+		});
+	});
+</script> -->
 		
 	
 		
