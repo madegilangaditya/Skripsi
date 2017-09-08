@@ -51,7 +51,7 @@ if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SER
 					<td>Menunggu Pembayaran</td>
 					<td>
 						<a class='btn btn-success' href='konfirmasi-trans.php?id=<?php echo $bar[id_transaksi]; ?>'>Konfirmasi</a>
-						<a class='btn btn-info' href='proses-delete-harga.php?id=<?php echo $bar[id_transaksi]; ?>' >View</a>
+						<a class='btn btn-info' href='#' data-toggle='modal' data-target='#view-modal' data-id='<?php echo $bar[id_transaksi]; ?>' id='getUser'>View</a>
 					</td>
 				</tr>
 			</tbody>
