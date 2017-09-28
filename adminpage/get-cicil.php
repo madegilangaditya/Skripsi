@@ -1,17 +1,26 @@
 <?php	 
 	include 'koneksi.php';
 		$id = $_REQUEST['id'];
-		//$st=$_REQUEST['st'];
-		
+		$st=$_REQUEST['st'];
+		if ($st==1) {
+			# code...
+			$sel =mysql_query("select tb_pelunasan.total_pelunasan, tb_bayar.total_byr from tb_det_angsuran 
+				inner join tb_bayar on tb_bayar.id=tb_det_angsuran.id_det_angsuran
+				inner join tb_pelunasan on tb_pelunasan.id_det_angsuran=tb_det_angsuran.id_det_angsuran
+				where tb_det_angsuran.id_det_angsuran=$id");
+		}else{
+
 			$sel =mysql_query("select tb_det_angsuran.*, tb_bayar.total_byr from tb_det_angsuran 
 				inner join tb_bayar on tb_bayar.id=tb_det_angsuran.id_det_angsuran
 				where id_det_angsuran=$id");
+		}
 			$br=mysql_fetch_assoc($sel);
-			$idt=$br['id_det_angsuran'];
+			$idt=$id;
 			$tgl=$br['tgl_jatuh_tempo'];
 			$ang=$br['angsuran'];
 			$dnd=$br['denda'];
 			$ttl = $br['total_byr'];
+			$tl = $br['total_pelunasan'];
 			$umuka=$ang+$dnd;
 			$sl=mysql_query("select * from tb_bayar where id=$idt and jenis=1");
 			$bar=mysql_fetch_array($sl);
@@ -31,7 +40,15 @@
 			</div>
 			<div class="cart-items" style="text-align: center;">
 				<p>Jumlah Tagihan :</p>  	
-			  	<h2>Rp <?php echo number_format($umuka);?></h2>
+			  	<h2>Rp <?php if ($st==1) {
+			  		# code...
+			  		echo number_format($tl);
+			  	} else {
+			  		
+			  		echo number_format($umuka);
+				}
+			  		?></h2>
+			  		
 				
 			</div>
 			<label class="control-label">Foto Struk Pembayaran:</label>

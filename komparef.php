@@ -204,6 +204,65 @@ include "head.php";
 						</tr>
 
 						<tr>
+							<th>Batas Penarikan</th>
+							<?php
+								$kmp=mysql_query("SELECT tb_jawu.*, tb_finance.`nama_finance`, tb_bunga.* FROM tb_jawu
+										INNER JOIN tb_bunga ON tb_bunga.`id_bunga`=tb_jawu.`id_bunga`
+										INNER JOIN tb_finance ON tb_finance.`id_finance`=tb_bunga.`id_finance`
+										WHERE tb_jawu.`jangka_waktu`='$jw'");
+								while ($fas=mysql_fetch_array($kmp)) {
+									$bts = $fas['batas_penarikan'];
+
+							?>
+								<td style="text-transform: capitalize;"><?php echo $bts; ?> Bulan Terlambat</td>
+							<?php		
+								}
+							?>
+						</tr>
+
+						<tr>
+							<th>Pelunasan Awal</th>
+							<?php
+								$kmp=mysql_query("SELECT tb_jawu.*, tb_finance.`nama_finance`, tb_bunga.* FROM tb_jawu
+										INNER JOIN tb_bunga ON tb_bunga.`id_bunga`=tb_jawu.`id_bunga`
+										INNER JOIN tb_finance ON tb_finance.`id_finance`=tb_bunga.`id_finance`
+										WHERE tb_jawu.`jangka_waktu`='$jw'");
+								while ($fas=mysql_fetch_array($kmp)) {
+									$min_lunas = $fas['min_lunas'];
+
+							?>
+								<td style="text-transform: capitalize;">Min. <?php echo $min_lunas; ?> Bulan Cicilan</td>
+							<?php		
+								}
+							?>
+						</tr>
+
+						<tr>
+							<th>Jenis Asuransi</th>
+							<?php
+								$kmp=mysql_query("SELECT tb_jawu.*, tb_finance.`nama_finance`, tb_bunga.* FROM tb_jawu
+										INNER JOIN tb_bunga ON tb_bunga.`id_bunga`=tb_jawu.`id_bunga`
+										INNER JOIN tb_finance ON tb_finance.`id_finance`=tb_bunga.`id_finance`
+										WHERE tb_jawu.`jangka_waktu`='$jw'");
+								while ($fas=mysql_fetch_array($kmp)) {
+									$jns = $fas['jenis_asuransi'];
+
+							?>
+								<td style="text-transform: capitalize;">
+								<?php if ($jns==1) {
+										echo "Total Lost Only";
+									} else{
+										echo "All Risk";
+									}
+								?>
+										
+								</td>
+							<?php		
+								}
+							?>
+						</tr>
+
+						<tr>
 							<th>Angsuran Per Bulan</th>
 							<?php
 								$kmp=mysql_query("SELECT tb_jawu.*, tb_finance.`nama_finance`, tb_bunga.* FROM tb_jawu

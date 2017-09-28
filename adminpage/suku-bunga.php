@@ -29,12 +29,14 @@
 						$idf = $_SESSION['user'];
 						$sel = mysql_query("select id_login from tb_login where username='$idf'");
 						$br = mysql_fetch_array($sel);
-						$sel1 = mysql_query("SELECT tb_finance.id_finance, tb_bunga.bunga_tetap, tb_bunga.bunga_menurun,tb_bunga.biaya_tambahan FROM tb_finance LEFT JOIN tb_bunga ON tb_bunga.id_finance=tb_finance.id_finance WHERE id_login = '$br[id_login]'");
+						$sel1 = mysql_query("SELECT tb_finance.id_finance, tb_bunga.bunga_tetap, tb_bunga.bunga_menurun,tb_bunga.biaya_tambahan,tb_bunga.jenis_asuransi, tb_bunga.batas_penarikan FROM tb_finance LEFT JOIN tb_bunga ON tb_bunga.id_finance=tb_finance.id_finance WHERE id_login = '$br[id_login]'");
 						$bar = mysql_fetch_array($sel1);
 						$idd = $bar['id_finance'];
 						$butap = $bar['bunga_tetap'];
 						$burun = $bar['bunga_menurun'];
 						$biaya = $bar['biaya_tambahan'];
+						$jns_asu = $bar['jenis_asuransi'];
+						$batas = $bar['batas_penarikan'];
 
 						//echo "tes $idf ".$bar[bunga_tetap];
 						?>
@@ -58,7 +60,37 @@
 								<label class="control-label">Biaya Administrasi</label>
 								<input type="number" class="form-control" name="biaya" id="biaya" placeholder="Harga" required value="<?php echo $biaya; ?>">
 							</div>
+
+							<div class="col-md-12 form-group2 group-mail">
+								<label class="control-label">Jenis Asuransi</label>
+								<select name="jns_asu" id="jns_asu" class="form-control">
+									<?php
+										echo"<option value='$jns_asu'";
+										if($jns_asu==1){
+											echo "selected='selected'>";
+											echo "Total Lost Only</option>";
+											echo "<option value='2'>All Risk</option>";
+										}else if($jns_asu==2){
+											echo "selected='selected'>";
+											echo "All Risk</option>";
+											echo "<option value='1'>Total Lost Only</option>";
+										}else{
+												
+									?>
+										<option>Pilih Asuransi</option>
+										<option value="1">Total Lost Only</option>
+										<option value="2">All Risk</option>
+									<?php
+										}
+									?>
+								</select>
+							</div>
 							
+							<div class="col-md-12 form-group2 group-mail">
+								<label class="control-label" style="display: block;">Batas Penarikan</label>
+								<input type="number" class="form-control" name="b_tarik" id="b_tarik" placeholder="Batas Penarikan" required value="<?php echo $batas; ?>" style="display: inline; width: 80%;">
+								<span class="control-label">Bulan</span>
+							</div>
 							<!--div class="col-md-12 form-group group-mail" id="jawu" >
 								<label class="control-label" style="display: block;">Jangka Waktu</label>
 								
@@ -141,6 +173,8 @@
 						</div>
 						<div class="clearfix"> </div>
 					</div>
+
+
 					<?php
 						}
 					?>

@@ -167,6 +167,56 @@
 					</table>
 
 				</div>
+
+				<div class="grid-form1" id="results">
+				 	<h3 id="forms-example" class="" style="margin-bottom: 0px;">Pelunasan Cicilan Belum di Aprove</h3>
+					<!--a href="admin.php?page=add-harga" class="btn btn-info" style="float: right;">Add Motor</a--><br class="clear" /><br class="clear" />
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Detail Angsuran</th>
+								<th>Nama Pelanggan</th>
+								<th>Total Pelunasan</th>
+								<!--th>Tanggal Pengajuan</th-->
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+								$sel1 = mysql_query("SELECT tb_det_angsuran.*, tb_angsuran.*, tb_pelanggan.nama_pelanggan, tb_pelunasan.total_pelunasan FROM tb_det_angsuran
+									INNER JOIN tb_angsuran ON tb_det_angsuran.id_angsuran=tb_angsuran.id_angsuran
+									inner join tb_pelunasan on tb_pelunasan.id_det_angsuran=tb_det_angsuran.id_det_angsuran
+									inner join tb_survey on tb_angsuran.id_survey=tb_survey.id_survey
+									inner join tb_kredit on tb_kredit.id_kredit=tb_survey.id_kredit
+									inner join tb_jawu on tb_jawu.id_jawu=tb_kredit.id_jawu
+									inner join tb_bunga on tb_bunga.id_bunga=tb_jawu.id_bunga
+									inner join tb_finance on tb_finance.id_finance=tb_bunga.id_finance
+									inner join tb_pelanggan on tb_kredit.id_pelanggan=tb_pelanggan.id_pelanggan
+									WHERE tb_bunga.id_finance=$idf AND tb_det_angsuran.status=4 ORDER BY tgl_jatuh_tempo ASC"); 
+								$i = 1;
+								while ($bari=mysql_fetch_array($sel1)) {
+									$tgl = date("d F Y H:i:s", strtotime($bari['tgl_jatuh_tempo']));
+									$hrg=number_format($bari['total_pelunasan'], 0, ".", ".");
+									
+									echo "<tr>
+											<td align='center'>$i</td>
+											<td><div>No.Angsuran:<a href='#' data-toggle='modal' data-target='#view-modal' data-id='$bari[id_angsuran]' id='getUser'  style='color: #b30143;'>$bari[id_angsuran]</a></div>$tgl</td>
+											<td>$bari[nama_pelanggan]</td>
+											<td>$hrg</td>
+											<td>
+												<a class='btn btn-info' href='#' data-toggle='modal' data-target='#view-modal' data-id='$bari[id_det_angsuran]' id='getang'>View</a>
+											
+											</td>													
+											</tr>";
+									$i++;
+									}
+								
+							?>
+						</tbody>
+					</table>
+
+				</div>
 		
 			
 	
@@ -233,7 +283,7 @@
 		$(document).on('click', '#getang', function(e){
 			
 			e.preventDefault();
-			
+			var st = 1;
 			var uid = $(this).data('id');   // it will get id of clicked row
 			
 			$('#dynamic-content').html(''); // leave it blank before ajax call
@@ -242,7 +292,7 @@
 			$.ajax({
 				url: 'get-cicil.php',
 				type: 'POST',
-				data: 'id='+uid,
+				data: 'id='+uid+'&st='+st,
 				dataType: 'html'
 			})
 			.done(function(data){

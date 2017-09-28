@@ -65,20 +65,22 @@
 								//echo "tes $idp";
 								
 								//echo "tes $get_total_rows, $total_pages, $page_position";
-								$result = mysql_query("SELECT tb_det_angsuran.*, tb_angsuran.jenis, tb_kredit.angsuran_pokok, tb_kredit.id_kredit, tb_jawu.`jangka_waktu`, tb_bunga.bunga_menurun FROM tb_det_angsuran 
+								$result = mysql_query("SELECT tb_det_angsuran.*, tb_angsuran.jenis, tb_kredit.angsuran_pokok, tb_kredit.id_kredit, tb_jawu.`jangka_waktu`, tb_jawu.min_lunas, tb_bunga.bunga_menurun FROM tb_det_angsuran 
 									INNER JOIN tb_angsuran ON tb_det_angsuran.id_angsuran=tb_angsuran.id_angsuran 
 									INNER JOIN tb_survey ON tb_survey.`id_survey`=tb_angsuran.`id_survey`
 									INNER JOIN tb_kredit ON tb_kredit.`id_kredit`=tb_survey.`id_kredit`
 									INNER JOIN tb_jawu ON tb_jawu.`id_jawu`=tb_kredit.`id_jawu` 
 									INNER JOIN tb_bunga ON tb_bunga.`id_bunga`=tb_jawu.`id_bunga` 
 									WHERE tb_det_angsuran.id_angsuran='$id'");
-								$no = 1+$page_position;
+								$no = 0;
 								while($bar=mysql_fetch_array($result)) { 
+									++$no;
 									$tgl = date("d F Y H:i:s", strtotime($bar['tgl_jatuh_tempo']));
 									$ang=$bar['angsuran'];
 									$angpok = $bar['angsuran_pokok'];
 									$burun = $bar['bunga_menurun'];
 									$jawu = $bar['jangka_waktu'];
+									$min_lunas = $bar['min_lunas'];
 									$ang_tmp=round($angpok/$jawu);
 									if ($bar['jenis']==1) {
 										$angbung = $ang-$ang_tmp;
@@ -158,10 +160,26 @@
 								?>
 									
 							</tbody>
-							<?php $no++;
+							<?php 
 
 							} ?> 
 						</table>
+						<?php
+							// $cek = mysql_query("SELECT status from tb_det_angsuran where id_angsuran=''");
+							$ck=$no-1;	
+							//echo "$ck; $min_lunas";
+							if ($ck>=$min_lunas&&$no<$jawu) {
+								# code...
+							
+						?>
+						<div>
+							
+							<a href="#" class="btn btn-info" data-toggle='modal' data-target='#view-modal' data-id="<?php echo $id; ?>" id='lunas'>Bayar Lunas</a>
+							<input type="hidden" name="ck" value="<?php echo $ck; ?>" id="ck" >
+						</div>
+						<?php
+							}
+						?>
 					</div>
 					
 				</div>
@@ -203,6 +221,41 @@
 				url: 'byr.php',
 				type: 'POST',
 				data: 'id='+uid+'&st='+st,
+				dataType: 'html'
+			})
+			.done(function(data){
+				console.log(data);
+				console.log(uid);	
+				$('#dynamic-content').html('');    
+				$('#dynamic-content').html(data); // load response 
+				$('#modal-loader').hide();		  // hide ajax loader	
+			})
+			.fail(function(){
+				$('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
+				$('#modal-loader').hide();
+			});
+			
+		});
+		
+	});
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+			var ck = $("#ck").val();
+		$(document).on('click', '#lunas', function(e){
+			e.preventDefault();
+			
+			var uid = $(this).data('id');   // it will get id of clicked row
+			
+			$('#dynamic-content').html(''); // leave it blank before ajax call
+			$('#modal-loader').show();      // load ajax loader
+			
+			$.ajax({
+				url: 'lunas.php',
+				type: 'POST',
+				data: 'id='+uid+'&ck='+ck,
 				dataType: 'html'
 			})
 			.done(function(data){
